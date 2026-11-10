@@ -1,0 +1,2585 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-5193-Algorithm Analysis and Design/slides/05-relational-algebra/">
+      
+      
+        <link rel="prev" href="../04-logical-design/">
+      
+      
+        <link rel="next" href="../06-sql/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>5. Relational Algebra - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#eceg-4191" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5. Relational Algebra
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus/" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule/" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapters/01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../solutions/" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-5-relational-algebra-and-calculus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 5 — Relational Algebra and Calculus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#51-why-relational-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 — Why Relational Algebra?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-the-six-fundamental-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 — The Six Fundamental Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53-selection-sigma" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 — Selection (\(\sigma\))
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54-projection-pi" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4 — Projection (\(\pi\))
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55-union-difference-intersection" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5 — Union, Difference, Intersection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56-cartesian-product-times" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.6 — Cartesian Product (\(\times\))
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57-joins" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7 — Joins
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#58-outer-joins" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.8 — Outer Joins
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#59-division-div" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.9 — Division (\(\div\))
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-51-division-on-company" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.1 — Division on COMPANY
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#510-additional-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.10 — Additional Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-52-five-company-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.2 — Five COMPANY queries
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#511-tuple-relational-calculus" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.11 — Tuple Relational Calculus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-53-trc-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.3 — TRC queries
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#512-domain-relational-calculus" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.12 — Domain Relational Calculus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#513-equivalence-of-languages" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.13 — Equivalence of Languages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-5-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 5 — key takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-chapter-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next — Chapter 6
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../solutions/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-5-relational-algebra-and-calculus" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 5 — Relational Algebra and Calculus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#51-why-relational-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 — Why Relational Algebra?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-the-six-fundamental-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 — The Six Fundamental Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53-selection-sigma" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.3 — Selection (\(\sigma\))
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54-projection-pi" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.4 — Projection (\(\pi\))
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55-union-difference-intersection" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.5 — Union, Difference, Intersection
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56-cartesian-product-times" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.6 — Cartesian Product (\(\times\))
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57-joins" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.7 — Joins
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#58-outer-joins" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.8 — Outer Joins
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#59-division-div" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.9 — Division (\(\div\))
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-51-division-on-company" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.1 — Division on COMPANY
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#510-additional-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.10 — Additional Operations
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-52-five-company-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.2 — Five COMPANY queries
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#511-tuple-relational-calculus" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.11 — Tuple Relational Calculus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-53-trc-queries" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 5.3 — TRC queries
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#512-domain-relational-calculus" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.12 — Domain Relational Calculus
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#513-equivalence-of-languages" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.13 — Equivalence of Languages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-5-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 5 — key takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-chapter-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next — Chapter 6
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="eceg-4191">ECEG-4191<a class="headerlink" href="#eceg-4191" title="Permanent link">&para;</a></h1>
+<h2 id="chapter-5-relational-algebra-and-calculus">Chapter 5 — Relational Algebra and Calculus<a class="headerlink" href="#chapter-5-relational-algebra-and-calculus" title="Permanent link">&para;</a></h2>
+<hr />
+<h2 id="learning-outcomes">Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
+<div class="fragment">
+
+1. Express queries using the **six fundamental relational-algebra operations**.
+
+</div>
+
+<div class="fragment">
+
+2. Distinguish **theta, equi, natural**, and **outer** joins.
+
+</div>
+
+<div class="fragment">
+
+3. Use **division** for "for all" queries.
+
+</div>
+
+<div class="fragment">
+
+4. Translate between **relational algebra** and **tuple relational calculus**.
+
+</div>
+
+<div class="fragment">
+
+5. Translate between **TRC** and **domain relational calculus**.
+
+</div>
+
+<hr />
+<h2 id="51-why-relational-algebra">5.1 — Why Relational Algebra?<a class="headerlink" href="#51-why-relational-algebra" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Definition (Elmasri §6.1)</summary>
+<p><strong>Relational algebra</strong> is a procedural query language: each query is a sequence of operations on relations, producing a new relation.</p>
+</details>
+<div class="fragment">
+
+???+ info "Why it matters"
+    - It is the **theoretical foundation** of SQL.
+    - It is the **intermediate language** for query optimization — every SQL query is translated to a relational-algebra tree.
+    - It is **relationally complete** — any query expressible in relational calculus can be expressed in relational algebra.
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Procedural vs declarative"
+    Relational algebra is **procedural** — you specify the operations. Relational calculus (and SQL) is **declarative** — you specify what you want. The two are equivalent in power.
+
+</div>
+
+<hr />
+<h2 id="52-the-six-fundamental-operations">5.2 — The Six Fundamental Operations<a class="headerlink" href="#52-the-six-fundamental-operations" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>The minimal complete set</summary>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Symbol</th>
+<th>Arity</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Selection</strong></td>
+<td><span class="arithmatex">\(\sigma\)</span></td>
+<td>Unary</td>
+<td>Filter tuples</td>
+</tr>
+<tr>
+<td><strong>Projection</strong></td>
+<td><span class="arithmatex">\(\pi\)</span></td>
+<td>Unary</td>
+<td>Select columns</td>
+</tr>
+<tr>
+<td><strong>Union</strong></td>
+<td><span class="arithmatex">\(\cup\)</span></td>
+<td>Binary</td>
+<td>Combine two relations</td>
+</tr>
+<tr>
+<td><strong>Difference</strong></td>
+<td><span class="arithmatex">\(-\)</span></td>
+<td>Binary</td>
+<td>Tuples in first but not second</td>
+</tr>
+<tr>
+<td><strong>Cartesian product</strong></td>
+<td><span class="arithmatex">\(\times\)</span></td>
+<td>Binary</td>
+<td>All pairings</td>
+</tr>
+<tr>
+<td><strong>Rename</strong></td>
+<td><span class="arithmatex">\(\rho\)</span></td>
+<td>Unary</td>
+<td>Rename relations/attributes</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+!!! tip "Everything else is derived"
+    Joins, intersection, division — all can be expressed using these six. Knowing which are *fundamental* is essential for understanding query optimization.
+
+</div>
+
+<hr />
+<h2 id="53-selection-sigma">5.3 — Selection (<span class="arithmatex">\(\sigma\)</span>)<a class="headerlink" href="#53-selection-sigma" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Definition</summary>
+<p><span class="arithmatex">\(\sigma_{\text{condition}}(R)\)</span> returns the tuples of <span class="arithmatex">\(R\)</span> satisfying the boolean condition.</p>
+</details>
+<div class="fragment">
+
+???+ info "Conditions"
+    - Comparison: $=, \ne, <, \le, >, \ge$.
+    - Boolean: $\land, \lor, \lnot$.
+    - Attribute names and constants.
+
+</div>
+
+<div class="fragment">
+
+???+ info "Examples"
+    - $\sigma_{\text{salary} > 40000}(\text{EMPLOYEE})$ — employees earning > 40k.
+    - $\sigma_{\text{dno}=5 \land \text{sex}='F'}(\text{EMPLOYEE})$ — female employees in dept 5.
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Selection is commutative"
+    $\sigma_{c_1}(\sigma_{c_2}(R)) = \sigma_{c_2}(\sigma_{c_1}(R))$. This is the first rule of query optimization.
+
+</div>
+
+<hr />
+<h2 id="54-projection-pi">5.4 — Projection (<span class="arithmatex">\(\pi\)</span>)<a class="headerlink" href="#54-projection-pi" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Definition</summary>
+<p><span class="arithmatex">\(\pi_{A_1, A_2, \ldots, A_k}(R)\)</span> returns a relation with only the listed attributes. <strong>Duplicates are removed</strong> — the result is a set.</p>
+</details>
+<div class="fragment">
+
+???+ info "Examples"
+    - $\pi_{\text{name, salary}}(\text{EMPLOYEE})$ — names and salaries.
+    - $\pi_{\text{dno}}(\text{EMPLOYEE})$ — departments that have at least one employee (duplicates removed).
+
+</div>
+
+<div class="fragment">
+
+!!! warning "Projection and duplicates"
+    $\pi_{\text{dno}}(\text{EMPLOYEE})$ has **one tuple per department**, not per employee. This is because relational algebra is set-based. In SQL, you need `DISTINCT` because SQL's default is bag semantics.
+
+</div>
+
+<hr />
+<h2 id="55-union-difference-intersection">5.5 — Union, Difference, Intersection<a class="headerlink" href="#55-union-difference-intersection" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Set-theoretic operations</summary>
+<p>For <span class="arithmatex">\(R\)</span> and <span class="arithmatex">\(S\)</span> with the <strong>same schema</strong> (union-compatible):</p>
+<ul>
+<li><span class="arithmatex">\(R \cup S\)</span> — tuples in <span class="arithmatex">\(R\)</span> or <span class="arithmatex">\(S\)</span> or both.</li>
+<li><span class="arithmatex">\(R - S\)</span> — tuples in <span class="arithmatex">\(R\)</span> but not <span class="arithmatex">\(S\)</span>.</li>
+<li><span class="arithmatex">\(R \cap S\)</span> — tuples in both (derived: <span class="arithmatex">\(R - (R - S)\)</span>).</li>
+</ul>
+</details>
+<div class="fragment">
+
+???+ info "Union-compatibility"
+    Both relations must have the **same number of attributes** and **compatible domains** in each position. Attribute names may differ.
+
+</div>
+
+<div class="fragment">
+
+???+ info "Example"
+    Departments that have employees or projects:
+
+    $$
+    \pi_{\text{dno}}(\text{EMPLOYEE}) \cup \pi_{\text{dnum}}(\text{PROJECT}).
+    $$
+
+</div>
+
+<div class="fragment">
+
+!!! warning "Union removes duplicates"
+    $R \cup S$ contains each tuple once. If you want to count duplicates, you need SQL's `UNION ALL` — not expressible in pure relational algebra.
+
+</div>
+
+<hr />
+<h2 id="56-cartesian-product-times">5.6 — Cartesian Product (<span class="arithmatex">\(\times\)</span>)<a class="headerlink" href="#56-cartesian-product-times" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Definition</summary>
+<p><span class="arithmatex">\(R \times S\)</span> pairs every tuple of <span class="arithmatex">\(R\)</span> with every tuple of <span class="arithmatex">\(S\)</span>. If <span class="arithmatex">\(R\)</span> has <span class="arithmatex">\(n\)</span> tuples and <span class="arithmatex">\(S\)</span> has <span class="arithmatex">\(m\)</span>, <span class="arithmatex">\(R \times S\)</span> has <span class="arithmatex">\(n \times m\)</span> tuples.</p>
+</details>
+<div class="fragment">
+
+???+ info "Example"
+    With 100 employees and 10 departments, `EMPLOYEE × DEPARTMENT` has 1,000 tuples — most of them meaningless (employees paired with unrelated departments).
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Cartesian product is the basis for joins"
+    Every join is a Cartesian product followed by a selection. Query optimizers know this — and rarely materialize the full cross product.
+
+</div>
+
+<div class="fragment">
+
+???+ warning "Size explosion"
+    Cross products grow multiplicatively. On large tables, they are catastrophic. Always filter or join instead.
+
+</div>
+
+<hr />
+<h2 id="57-joins">5.7 — Joins<a class="headerlink" href="#57-joins" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Four kinds of join</summary>
+<table>
+<thead>
+<tr>
+<th>Join</th>
+<th>Symbol</th>
+<th>Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Theta join</strong></td>
+<td><span class="arithmatex">\(R \bowtie_\theta S\)</span></td>
+<td>Any predicate <span class="arithmatex">\(\theta\)</span></td>
+</tr>
+<tr>
+<td><strong>Equijoin</strong></td>
+<td><span class="arithmatex">\(R \bowtie_{A=B} S\)</span></td>
+<td>Equality on attributes</td>
+</tr>
+<tr>
+<td><strong>Natural join</strong></td>
+<td><span class="arithmatex">\(R \bowtie S\)</span></td>
+<td>Equality on all <strong>common</strong> attributes, duplicates removed</td>
+</tr>
+<tr>
+<td><strong>Outer join</strong></td>
+<td><span class="arithmatex">\(R ⟕ S\)</span>, etc.</td>
+<td>Preserves unmatched tuples</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+???+ info "Example — theta join"
+    $$
+    \text{EMPLOYEE} \bowtie_{\text{salary} > 50000} \text{DEPARTMENT}
+    $$
+
+    Pairs every employee earning > 50k with every department (rarely useful).
+
+</div>
+
+<div class="fragment">
+
+???+ info "Example — equijoin"
+    $$
+    \text{EMPLOYEE} \bowtie_{\text{dno} = \text{dnumber}} \text{DEPARTMENT}
+    $$
+
+    Correct pairing of employees with their departments.
+
+</div>
+
+<div class="fragment">
+
+???+ info "Example — natural join"
+    $$
+    \text{EMPLOYEE} \bowtie \text{DEPARTMENT}
+    $$
+
+    Same as the equijoin above, but with duplicate `dno`/`dnumber` removed automatically.
+
+</div>
+
+<hr />
+<h2 id="58-outer-joins">5.8 — Outer Joins<a class="headerlink" href="#58-outer-joins" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Why outer joins?</summary>
+<p>A natural join drops tuples that have no match on the other side. The <strong>outer join</strong> preserves them, padding the missing side with NULLs.</p>
+</details>
+<div class="fragment">
+
+???+ note "Three variants"
+    | Variant | Symbol | Preserves |
+    |---|---|---|
+    | **Left outer** | $R ⟕ S$ | All of $R$ |
+    | **Right outer** | $R ⟖ S$ | All of $S$ |
+    | **Full outer** | $R ⟗ S$ | All of $R$ and $S$ |
+
+</div>
+
+<div class="fragment">
+
+???+ info "Example"
+    $$
+    \text{EMPLOYEE} ⟕ \text{DEPARTMENT}
+    $$
+
+    Includes employees **with no department** (their `dno` is NULL in the padded DEPARTMENT columns). A regular natural join would drop them.
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Outer join in SQL"
+    SQL supports all three variants: `LEFT JOIN`, `RIGHT JOIN`, `FULL OUTER JOIN`. The default `INNER JOIN` is the natural join.
+
+</div>
+
+<hr />
+<h2 id="59-division-div">5.9 — Division (<span class="arithmatex">\(\div\)</span>)<a class="headerlink" href="#59-division-div" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Definition</summary>
+<p>For <span class="arithmatex">\(R(A, B)\)</span> and <span class="arithmatex">\(S(B)\)</span>: <span class="arithmatex">\(R \div S\)</span> returns the <strong><span class="arithmatex">\(A\)</span>-values</strong> in <span class="arithmatex">\(R\)</span> that appear with <strong>every</strong> <span class="arithmatex">\(B\)</span>-value in <span class="arithmatex">\(S\)</span>.</p>
+</details>
+<div class="fragment">
+
+???+ info "Formal definition"
+    $$
+    R \div S = \{ t[A] \mid \forall s \in S,\ \exists r \in R : r[A] = t[A] \land r[B] = s[B] \}.
+    $$
+
+</div>
+
+<div class="fragment">
+
+???+ info "In relational algebra"
+    $$
+    R \div S = \pi_A(R) - \pi_A(\pi_A(R) \times S - R).
+    $$
+
+    "All $A$-values minus those that miss at least one $B$."
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Division = 'for all'"
+    Division answers the "**for all**" questions: employees who work on **all** projects; students who took **every** required course; suppliers who supply **every** part.
+
+</div>
+
+<hr />
+<h2 id="worked-example-51-division-on-company">Worked example 5.1 — Division on COMPANY<a class="headerlink" href="#worked-example-51-division-on-company" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Problem:</p>
+<p>Find employees who work on <strong>all</strong> projects.</p>
+</div>
+<div class="fragment">
+
+???+ note "**Step 1 — schema.**"
+    $\text{WORKS\_ON}(\text{essn}, \text{pno})$, $\text{PROJECT}(\text{pnumber})$.
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 2 — set up division.**"
+    $$
+    \pi_{\text{essn}, \text{pno}}(\text{WORKS\_ON}) \div \pi_{\text{pnumber}}(\text{PROJECT}).
+    $$
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 3 — join with EMPLOYEE for names.**"
+    $$
+    \pi_{\text{name}}\bigl(\text{EMPLOYEE} \bowtie (\pi_{\text{essn}, \text{pno}}(\text{WORKS\_ON}) \div \pi_{\text{pnumber}}(\text{PROJECT}))\bigr).
+    $$
+
+</div>
+
+<div class="fragment">
+
+??? success "**Interpretation.**"
+    Employees whose `pno` set covers every `pnumber` in PROJECT. If a new project is added, only those who work on it are included — automatically.
+
+</div>
+
+<hr />
+<h2 id="510-additional-operations">5.10 — Additional Operations<a class="headerlink" href="#510-additional-operations" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Derived operations</summary>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Symbol</th>
+<th>Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Intersection</strong></td>
+<td><span class="arithmatex">\(\cap\)</span></td>
+<td><span class="arithmatex">\(R \cap S = R - (R - S)\)</span></td>
+</tr>
+<tr>
+<td><strong>Natural join</strong></td>
+<td><span class="arithmatex">\(\bowtie\)</span></td>
+<td><span class="arithmatex">\(\pi_{\text{all}} (\sigma_{\text{equal common attrs}}(R \times S))\)</span></td>
+</tr>
+<tr>
+<td><strong>Assignment</strong></td>
+<td><span class="arithmatex">\(:=\)</span></td>
+<td>Name an intermediate result</td>
+</tr>
+<tr>
+<td><strong>Aggregate</strong></td>
+<td><span class="arithmatex">\(\mathcal{F}\)</span></td>
+<td>Count, sum, avg, min, max</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+???+ info "Aggregate operator"
+    $\mathcal{G}_{\text{grouping attrs}} \mathcal{F}_{\text{agg}}(\text{relation})$:
+
+    $\mathcal{G}_{\text{dno}} \mathcal{F}_{\text{COUNT(ssn), AVG(salary)}}(\text{EMPLOYEE})$
+
+    Groups by department; counts employees; averages salaries.
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Relational algebra is closed"
+    Every operation takes relations and returns relations — so operations compose freely.
+
+</div>
+
+<hr />
+<h2 id="worked-example-52-five-company-queries">Worked example 5.2 — Five COMPANY queries<a class="headerlink" href="#worked-example-52-five-company-queries" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Company schema:</p>
+<p><code>EMPLOYEE(ssn, name, salary, dno)</code>, <code>DEPARTMENT(dnumber, dname, mgr_ssn)</code>, <code>PROJECT(pnumber, pname, dnum)</code>, <code>WORKS_ON(essn, pno, hours)</code>.</p>
+</div>
+<div class="fragment">
+
+???+ note "**Q1 — names of employees in 'Research'**"
+    $$
+    \pi_{\text{name}}\bigl(\text{EMPLOYEE} \bowtie \sigma_{\text{dname}=\text{'Research'}}(\text{DEPARTMENT})\bigr)
+    $$
+
+</div>
+
+<div class="fragment">
+
+??? info "**Q2 — names of employees who work on 'ProductX'**"
+    $$
+    \pi_{\text{name}}\bigl(\text{EMPLOYEE} \bowtie \text{WORKS\_ON} \bowtie \sigma_{\text{pname}=\text{'ProductX'}}(\text{PROJECT})\bigr)
+    $$
+
+</div>
+
+<div class="fragment">
+
+??? info "**Q3 — employees who do not work on any project**"
+    $$
+    \pi_{\text{name}}(\text{EMPLOYEE}) - \pi_{\text{name}}(\text{EMPLOYEE} \bowtie \text{WORKS\_ON})
+    $$
+
+</div>
+
+<div class="fragment">
+
+??? info "**Q4 — department with the highest-paid manager**"
+    Let $S := \mathcal{G}_{\text{dno}} \mathcal{F}_{\text{MAX(salary)}}(\text{EMPLOYEE})$.
+    $$
+    \pi_{\text{dname}}\Bigl(\sigma_{\text{salary} = \text{max}}(\text{EMPLOYEE} \bowtie S) \bowtie \text{DEPARTMENT}\Bigr)
+    $$
+
+</div>
+
+<div class="fragment">
+
+??? info "**Q5 — employees who work on all projects**"
+    $$
+    \pi_{\text{name}}\bigl(\text{EMPLOYEE} \bowtie (\pi_{\text{essn}, \text{pno}}(\text{WORKS\_ON}) \div \pi_{\text{pnumber}}(\text{PROJECT}))\bigr)
+    $$
+
+</div>
+
+<hr />
+<h2 id="511-tuple-relational-calculus">5.11 — Tuple Relational Calculus<a class="headerlink" href="#511-tuple-relational-calculus" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Definition (Elmasri §6.6)</summary>
+<p><strong>TRC</strong> is a declarative language: a query is a set of tuples satisfying a predicate.</p>
+<div class="arithmatex">\[
+\{ t \mid P(t) \}
+\]</div>
+<p>where <span class="arithmatex">\(t\)</span> is a tuple variable.</p>
+</details>
+<div class="fragment">
+
+???+ info "Quantifiers"
+    - $\exists t \in R \; P(t)$ — there exists a tuple in $R$ satisfying $P$.
+    - $\forall t \in R \; P(t)$ — every tuple in $R$ satisfies $P$.
+
+</div>
+
+<div class="fragment">
+
+???+ info "Example"
+    Employees earning > 40k:
+    $$
+    \{ t \mid t \in \text{EMPLOYEE} \land t[\text{salary}] > 40000 \}.
+    $$
+
+</div>
+
+<div class="fragment">
+
+!!! tip "TRC is declarative"
+    You specify **what** — not how. The DBMS decides the execution order. This is the same paradigm as SQL.
+
+</div>
+
+<hr />
+<h2 id="worked-example-53-trc-queries">Worked example 5.3 — TRC queries<a class="headerlink" href="#worked-example-53-trc-queries" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Express in TRC:</p>
+</div>
+<div class="fragment">
+
+???+ note "**Q1 — names of employees in 'Research'**"
+    $$
+    \{ t[\text{name}] \mid t \in \text{EMPLOYEE} \land \exists d \in \text{DEPARTMENT} \; (d[\text{dnumber}] = t[\text{dno}] \land d[\text{dname}] = \text{'Research'}) \}
+    $$
+
+</div>
+
+<div class="fragment">
+
+??? info "**Q2 — employees who work on all projects**"
+    $$
+    \{ t[\text{name}] \mid t \in \text{EMPLOYEE} \land \forall p \in \text{PROJECT} \; \exists w \in \text{WORKS\_ON} \; (w[\text{essn}] = t[\text{ssn}] \land w[\text{pno}] = p[\text{pnumber}]) \}
+    $$
+
+</div>
+
+<div class="fragment">
+
+??? info "**Q3 — departments with no employees**"
+    $$
+    \{ d[\text{dname}] \mid d \in \text{DEPARTMENT} \land \lnot \exists e \in \text{EMPLOYEE} \; (e[\text{dno}] = d[\text{dnumber}]) \}
+    $$
+
+</div>
+
+<div class="fragment">
+
+??? success "**Notice the pattern.**"
+    - "There exists" → $\exists$.
+    - "For all" → $\forall$.
+    - "Does not exist" → $\lnot \exists$.
+
+</div>
+
+<hr />
+<h2 id="512-domain-relational-calculus">5.12 — Domain Relational Calculus<a class="headerlink" href="#512-domain-relational-calculus" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Definition</summary>
+<p><strong>DRC</strong> quantifies over <strong>domain values</strong>, not tuples.</p>
+<div class="arithmatex">\[
+\{ \langle x_1, x_2, \ldots, x_n \rangle \mid P(x_1, \ldots, x_n) \}
+\]</div>
+</details>
+<div class="fragment">
+
+???+ info "Example"
+    Employees earning > 40k:
+    $$
+    \{ \langle n \rangle \mid \exists s, a, d \; (\text{EMPLOYEE}(s, n, a, d) \land a > 40000) \}
+    $$
+
+    Note: `EMPLOYEE(s, n, a, d)` is a predicate asserting "there is a tuple with these values".
+
+</div>
+
+<div class="fragment">
+
+!!! tip "TRC vs DRC"
+    Both are **relationally complete** — they express the same set of queries. TRC is easier for large schemas (tuple variables); DRC is easier for formal proofs (pure first-order logic).
+
+</div>
+
+<div class="fragment">
+
+???+ warning "Safety"
+    DRC expressions must be **safe** — every variable must be drawn from a finite domain. Without safety, expressions can range over infinite domains and produce infinite results.
+
+</div>
+
+<hr />
+<h2 id="513-equivalence-of-languages">5.13 — Equivalence of Languages<a class="headerlink" href="#513-equivalence-of-languages" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Three equivalent languages</summary>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Style</th>
+<th>Power</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Relational algebra</strong></td>
+<td>Procedural</td>
+<td>Same</td>
+</tr>
+<tr>
+<td><strong>Tuple relational calculus</strong></td>
+<td>Declarative</td>
+<td>Same</td>
+</tr>
+<tr>
+<td><strong>Domain relational calculus</strong></td>
+<td>Declarative</td>
+<td>Same</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+???+ abstract "Codd's theorem"
+    Relational algebra, TRC, and DRC are **relationally complete** — they express exactly the same set of queries (those expressible in first-order logic over finite relations).
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Why this matters"
+    - **Query optimization**: converting SQL (calculus) to a plan (algebra).
+    - **Correctness proofs**: showing two queries are equivalent.
+    - **Language design**: SQL is essentially a syntactically sugared TRC.
+
+</div>
+
+<hr />
+<h2 id="chapter-5-key-takeaways">Chapter 5 — key takeaways<a class="headerlink" href="#chapter-5-key-takeaways" title="Permanent link">&para;</a></h2>
+<div class="fragment">
+
+**1.** Six **fundamental operations**: $\sigma, \pi, \cup, -, \times, \rho$. Everything else is derived.
+
+</div>
+
+<div class="fragment">
+
+**2.** **Selection** filters tuples; **projection** selects columns and **removes duplicates**.
+
+</div>
+
+<div class="fragment">
+
+**3.** **Joins**: theta (any predicate), equi (equality), natural (equality on common attrs), outer (preserves unmatched).
+
+</div>
+
+<div class="fragment">
+
+**4.** **Division** answers "for all" questions — employees who work on all projects.
+
+</div>
+
+<div class="fragment">
+
+**5.** **TRC** quantifies over tuples; **DRC** quantifies over values. Both are declarative.
+
+</div>
+
+<div class="fragment">
+
+**6.** **Codd's theorem**: relational algebra, TRC, and DRC are **relationally complete** — same expressive power.
+
+</div>
+
+<hr />
+<h2 id="next-chapter-6">Next — Chapter 6<a class="headerlink" href="#next-chapter-6" title="Permanent link">&para;</a></h2>
+<p><strong>SQL.</strong></p>
+<div class="fragment">
+
+- **DDL**: `CREATE`, `ALTER`, `DROP`; constraints.
+- **DML**: `SELECT` with `WHERE`, joins, aggregates, `GROUP BY`, `HAVING`, subqueries, `EXISTS`, set operations, `NULL` handling.
+- **Data modification**: `INSERT`, `UPDATE`, `DELETE`.
+
+</div>
+
+<div class="fragment">
+
+Chapter 5 gave the **theory**. Chapter 6 gives the **language** every database engineer uses every day.
+
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

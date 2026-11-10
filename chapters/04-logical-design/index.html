@@ -1,0 +1,2070 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-5193-Algorithm Analysis and Design/chapters/04-logical-design/">
+      
+      
+        <link rel="prev" href="../03-er-modeling/">
+      
+      
+        <link rel="next" href="../05-relational-algebra/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>4. Logical Design - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-4-logical-database-design-and-normalisation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4. Logical Design
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus/" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule/" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../slides/01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../solutions/" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#41-the-7-step-er-to-relational-mapping-elmasri-91" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 The 7-step ER-to-relational mapping (Elmasri §9.1)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 The 7-step ER-to-relational mapping (Elmasri §9.1)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-eer-extra-steps-elmasri-92" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1.1 EER extra steps (Elmasri §9.2)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-41-mapping-the-company-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.1 — mapping the COMPANY database
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-informal-design-guidelines-elmasri-141" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Informal design guidelines (Elmasri §14.1)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-functional-dependencies-elmasri-142" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Functional dependencies (Elmasri §14.2)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-42-closure-and-minimal-cover" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.2 — closure and minimal cover
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44-normal-forms-elmasri-143145" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 Normal forms (Elmasri §14.3–§14.5)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.4 Normal forms (Elmasri §14.3–§14.5)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#441-1nf-first-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4.1 1NF — first normal form
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#442-2nf-second-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4.2 2NF — second normal form
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#443-3nf-third-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4.3 3NF — third normal form
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#444-bcnf-boyce-codd-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4.4 BCNF — Boyce-Codd normal form
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-43-3nf-synthesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.3 — 3NF synthesis
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#45-practical-use-of-normal-forms" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5 Practical use of normal forms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#46-quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.6 Quiz
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../slides/07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../solutions/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#41-the-7-step-er-to-relational-mapping-elmasri-91" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 The 7-step ER-to-relational mapping (Elmasri §9.1)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.1 The 7-step ER-to-relational mapping (Elmasri §9.1)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#411-eer-extra-steps-elmasri-92" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1.1 EER extra steps (Elmasri §9.2)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-41-mapping-the-company-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.1 — mapping the COMPANY database
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-informal-design-guidelines-elmasri-141" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 Informal design guidelines (Elmasri §14.1)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-functional-dependencies-elmasri-142" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 Functional dependencies (Elmasri §14.2)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-42-closure-and-minimal-cover" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.2 — closure and minimal cover
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44-normal-forms-elmasri-143145" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 Normal forms (Elmasri §14.3–§14.5)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.4 Normal forms (Elmasri §14.3–§14.5)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#441-1nf-first-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4.1 1NF — first normal form
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#442-2nf-second-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4.2 2NF — second normal form
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#443-3nf-third-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4.3 3NF — third normal form
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#444-bcnf-boyce-codd-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4.4 BCNF — Boyce-Codd normal form
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-43-3nf-synthesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.3 — 3NF synthesis
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#45-practical-use-of-normal-forms" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5 Practical use of normal forms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#46-quiz" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.6 Quiz
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#answer-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      Answer key
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="chapter-4-logical-database-design-and-normalisation">Chapter 4 — Logical Database Design and Normalisation<a class="headerlink" href="#chapter-4-logical-database-design-and-normalisation" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">Chapter at a glance</p>
+<p><strong>Coverage:</strong> ER-to-relational mapping (7 steps) · EER-to-relational mapping (2 extra steps) · informal design guidelines · functional dependencies · normal forms 1NF, 2NF, 3NF, BCNF.</p>
+</div>
+<hr />
+<h2 id="learning-outcomes">Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Apply the 7-step ER-to-relational mapping algorithm.</li>
+<li>Apply the 2 extra steps for EER constructs (specialisation, categories).</li>
+<li>State and use Armstrong's axioms to compute closures and minimal covers.</li>
+<li>Normalise a schema to 3NF and BCNF; verify decomposition quality.</li>
+</ol>
+<hr />
+<h2 id="41-the-7-step-er-to-relational-mapping-elmasri-91">4.1 The 7-step ER-to-relational mapping (Elmasri §9.1)<a class="headerlink" href="#41-the-7-step-er-to-relational-mapping-elmasri-91" title="Permanent link">&para;</a></h2>
+<p><strong>Step 1 — Regular entity types.</strong> Each regular entity becomes a relation. Include all simple attributes. Choose one key as primary key.</p>
+<p><strong>Step 2 — Weak entity types.</strong> Each weak entity becomes a relation. Include the owner's primary key as a foreign key. The primary key is (owner key, partial key).</p>
+<p><strong>Step 3 — Binary 1:1 relationships.</strong> Include the primary key of one side as a foreign key in the other side. Prefer the side with total participation.</p>
+<p><strong>Step 4 — Binary 1:N relationships.</strong> Include the primary key of the "1" side as a foreign key in the "N" side.</p>
+<p><strong>Step 5 — Binary M:N relationships.</strong> Create a new relation with foreign keys to both sides. Primary key is the combination of both foreign keys. Add any relationship attributes.</p>
+<p><strong>Step 6 — Multivalued attributes.</strong> Create a new relation with the attribute and the owner's primary key. Primary key is (owner key, attribute).</p>
+<p><strong>Step 7 — N-ary relationships.</strong> Create a new relation with foreign keys to all participants.</p>
+<h3 id="411-eer-extra-steps-elmasri-92">4.1.1 EER extra steps (Elmasri §9.2)<a class="headerlink" href="#411-eer-extra-steps-elmasri-92" title="Permanent link">&para;</a></h3>
+<p><strong>Step 8 — Specialisation / generalisation.</strong> Four options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8A</td>
+<td>Multiple relations (superclass + subclasses)</td>
+<td>Any specialisation</td>
+</tr>
+<tr>
+<td>8B</td>
+<td>Multiple relations (subclasses only)</td>
+<td>Total, disjoint</td>
+</tr>
+<tr>
+<td>8C</td>
+<td>Single relation with a type attribute</td>
+<td>Disjoint, no subclass-specific attributes</td>
+</tr>
+<tr>
+<td>8D</td>
+<td>Single relation with multiple type attributes</td>
+<td>Overlapping</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Step 9 — Categories.</strong> Create one relation per subclass, and a new relation for the category that includes the primary key of each participant, plus a type discriminator.</p>
+<hr />
+<h2 id="worked-example-41-mapping-the-company-database">Worked example 4.1 — mapping the COMPANY database<a class="headerlink" href="#worked-example-41-mapping-the-company-database" title="Permanent link">&para;</a></h2>
+<p><strong>Input ER.</strong> (From Chapter 3.)</p>
+<p><strong>Step 1 — regular entities.</strong></p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="n">ssn</span><span class="w">        </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">name</span><span class="w">       </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="n">address</span><span class="w">    </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="n">salary</span><span class="w">     </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="n">sex</span><span class="w">        </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="n">birth_date</span><span class="w"> </span><span class="nb">DATE</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">);</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="n">dnumber</span><span class="w">    </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="n">dname</span><span class="w">      </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="k">UNIQUE</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="p">);</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">PROJECT</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="n">pnumber</span><span class="w">    </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="n">pname</span><span class="w">      </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="k">location</span><span class="w">   </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="p">);</span>
+</span></code></pre></div>
+<p><strong>Step 3 — 1:1 <code>MANAGES</code>.</strong> Put <code>mgr_ssn</code> (foreign key to EMPLOYEE) in DEPARTMENT.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">mgr_ssn</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">mgr_ssn</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="p">(</span><span class="n">ssn</span><span class="p">);</span>
+</span></code></pre></div>
+<p><strong>Step 4 — 1:N <code>WORKS_FOR</code> and <code>CONTROLS</code>.</strong> Add foreign keys on the "N" side.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">dno</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">dno</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="p">(</span><span class="n">dnumber</span><span class="p">);</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">PROJECT</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">dnum</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">dnum</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="p">(</span><span class="n">dnumber</span><span class="p">);</span>
+</span></code></pre></div>
+<p><strong>Step 5 — M:N <code>WORKS_ON</code>.</strong></p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">WORKS_ON</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="n">essn</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">pno</span><span class="w">  </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="n">hours</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">essn</span><span class="p">,</span><span class="w"> </span><span class="n">pno</span><span class="p">),</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">essn</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="p">(</span><span class="n">ssn</span><span class="p">),</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">pno</span><span class="p">)</span><span class="w">  </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">PROJECT</span><span class="p">(</span><span class="n">pnumber</span><span class="p">)</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="p">);</span>
+</span></code></pre></div>
+<p><strong>Step 6 — multivalued attribute <code>locations</code> of DEPARTMENT.</strong></p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">DEPT_LOCATIONS</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="n">dnumber</span><span class="w">   </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="n">dlocation</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">dnumber</span><span class="p">,</span><span class="w"> </span><span class="n">dlocation</span><span class="p">),</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">dnumber</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="p">(</span><span class="n">dnumber</span><span class="p">)</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">);</span>
+</span></code></pre></div>
+<p><strong>Step 2 — weak entity <code>DEPENDENT</code>.</strong></p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">DEPENDENT</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="n">essn</span><span class="w">           </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="n">dependent_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="n">sex</span><span class="w">            </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="n">birth_date</span><span class="w">     </span><span class="nb">DATE</span><span class="p">,</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="n">relationship</span><span class="w">   </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">essn</span><span class="p">,</span><span class="w"> </span><span class="n">dependent_name</span><span class="p">),</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">essn</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="p">(</span><span class="n">ssn</span><span class="p">)</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="p">);</span>
+</span></code></pre></div>
+<p><strong>Result: seven relations</strong> — EMPLOYEE, DEPARTMENT, PROJECT, WORKS_ON, DEPT_LOCATIONS, DEPENDENT (and the EER subclasses to be added in Step 8).</p>
+<hr />
+<h2 id="42-informal-design-guidelines-elmasri-141">4.2 Informal design guidelines (Elmasri §14.1)<a class="headerlink" href="#42-informal-design-guidelines-elmasri-141" title="Permanent link">&para;</a></h2>
+<p>Three red flags in a relational design:</p>
+<ol>
+<li><strong>Attribute semantics</strong> — each attribute should describe a single, clearly-defined property of the entity. Mixing semantics (e.g., a <code>phone</code> attribute that sometimes holds a home number, sometimes a work number) confuses joins.</li>
+<li><strong>Redundant information</strong> — duplicating data in tuples causes update anomalies (insertion, deletion, modification).</li>
+<li><strong>NULL values</strong> — excessive NULLs waste space and complicate joins; they also make constraints and aggregates hard to interpret.</li>
+</ol>
+<p><strong>Spurious tuples</strong> — decompositions that produce extra rows on join indicate a bad design. A <strong>lossless-join decomposition</strong> is one that avoids spurious tuples.</p>
+<hr />
+<h2 id="43-functional-dependencies-elmasri-142">4.3 Functional dependencies (Elmasri §14.2)<a class="headerlink" href="#43-functional-dependencies-elmasri-142" title="Permanent link">&para;</a></h2>
+<div class="admonition abstract">
+<p class="admonition-title">Definition</p>
+<p>A <strong>functional dependency</strong> (FD) <span class="arithmatex">\(X \to Y\)</span> on relation <span class="arithmatex">\(R\)</span> holds if, for every two tuples <span class="arithmatex">\(t_1, t_2\)</span> with <span class="arithmatex">\(t_1[X] = t_2[X]\)</span>, we also have <span class="arithmatex">\(t_1[Y] = t_2[Y]\)</span>.</p>
+</div>
+<p><strong>Armstrong's axioms</strong> (sound and complete):</p>
+<ul>
+<li><strong>Reflexivity:</strong> if <span class="arithmatex">\(Y \subseteq X\)</span>, then <span class="arithmatex">\(X \to Y\)</span>.</li>
+<li><strong>Augmentation:</strong> if <span class="arithmatex">\(X \to Y\)</span>, then <span class="arithmatex">\(XZ \to YZ\)</span>.</li>
+<li><strong>Transitivity:</strong> if <span class="arithmatex">\(X \to Y\)</span> and <span class="arithmatex">\(Y \to Z\)</span>, then <span class="arithmatex">\(X \to Z\)</span>.</li>
+</ul>
+<p><strong>Derived rules:</strong></p>
+<ul>
+<li><strong>Union:</strong> <span class="arithmatex">\(X \to Y, X \to Z \Rightarrow X \to YZ\)</span>.</li>
+<li><strong>Decomposition:</strong> <span class="arithmatex">\(X \to YZ \Rightarrow X \to Y, X \to Z\)</span>.</li>
+<li><strong>Pseudotransitivity:</strong> <span class="arithmatex">\(X \to Y, WY \to Z \Rightarrow WX \to Z\)</span>.</li>
+</ul>
+<p><strong>Closure.</strong> The <strong>closure <span class="arithmatex">\(X^+\)</span></strong> of <span class="arithmatex">\(X\)</span> under <span class="arithmatex">\(F\)</span> is the set of all attributes functionally determined by <span class="arithmatex">\(X\)</span>.</p>
+<p><strong>Minimal cover.</strong> A set <span class="arithmatex">\(F_{\min}\)</span> equivalent to <span class="arithmatex">\(F\)</span> with:</p>
+<ul>
+<li>No redundant attributes (every dependency is needed).</li>
+<li>No redundant attributes on the left side.</li>
+<li>RHS has a single attribute per dependency.</li>
+</ul>
+<hr />
+<h2 id="worked-example-42-closure-and-minimal-cover">Worked example 4.2 — closure and minimal cover<a class="headerlink" href="#worked-example-42-closure-and-minimal-cover" title="Permanent link">&para;</a></h2>
+<p><strong>Given.</strong> <span class="arithmatex">\(R(A,B,C,D,E)\)</span> with <span class="arithmatex">\(F = \{AB \to C,\ C \to D,\ D \to E\}\)</span>.</p>
+<p><strong>Compute <span class="arithmatex">\((AB)^+\)</span>:</strong></p>
+<ul>
+<li><span class="arithmatex">\(AB\)</span> (initial)</li>
+<li><span class="arithmatex">\(+ C\)</span> (from <span class="arithmatex">\(AB \to C\)</span>)</li>
+<li><span class="arithmatex">\(+ D\)</span> (from <span class="arithmatex">\(C \to D\)</span>)</li>
+<li><span class="arithmatex">\(+ E\)</span> (from <span class="arithmatex">\(D \to E\)</span>)</li>
+</ul>
+<p>So <span class="arithmatex">\((AB)^+ = \{A, B, C, D, E\}\)</span> — <span class="arithmatex">\(AB\)</span> is a superkey.</p>
+<p><strong>Is <span class="arithmatex">\(AB\)</span> a candidate key?</strong> Check <span class="arithmatex">\((A)^+ = \{A\}\)</span> and <span class="arithmatex">\((B)^+ = \{B\}\)</span> — neither is a superkey. <strong><span class="arithmatex">\(AB\)</span> is a candidate key.</strong> It is the only candidate key (nothing else determines <span class="arithmatex">\(A\)</span> or <span class="arithmatex">\(B\)</span>).</p>
+<p><strong>Minimal cover of <span class="arithmatex">\(F\)</span>:</strong> <span class="arithmatex">\(F\)</span> is already minimal — no dependency can be removed without losing equivalence, and the left sides are single-attribute or minimal.</p>
+<hr />
+<h2 id="44-normal-forms-elmasri-143145">4.4 Normal forms (Elmasri §14.3–§14.5)<a class="headerlink" href="#44-normal-forms-elmasri-143145" title="Permanent link">&para;</a></h2>
+<h3 id="441-1nf-first-normal-form">4.4.1 1NF — first normal form<a class="headerlink" href="#441-1nf-first-normal-form" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">1NF</p>
+<p>Every attribute value is <strong>atomic</strong> — no sets, lists, or nested relations.</p>
+</div>
+<p><strong>Fix:</strong> move multivalued attributes into a separate relation.</p>
+<h3 id="442-2nf-second-normal-form">4.4.2 2NF — second normal form<a class="headerlink" href="#442-2nf-second-normal-form" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">2NF</p>
+<p>In 1NF, <strong>and</strong> every non-prime attribute is <strong>fully functionally dependent</strong> on every candidate key (no partial dependency on part of a key).</p>
+</div>
+<p><strong>Fix:</strong> decompose so partial dependencies go to their own relations.</p>
+<h3 id="443-3nf-third-normal-form">4.4.3 3NF — third normal form<a class="headerlink" href="#443-3nf-third-normal-form" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">3NF</p>
+<p>In 2NF, <strong>and</strong> no non-prime attribute is <strong>transitively dependent</strong> on any candidate key. Equivalently, for every non-trivial FD <span class="arithmatex">\(X \to Y\)</span>: <strong><span class="arithmatex">\(X\)</span> is a superkey, or <span class="arithmatex">\(Y\)</span> is a prime attribute</strong>.</p>
+</div>
+<h3 id="444-bcnf-boyce-codd-normal-form">4.4.4 BCNF — Boyce-Codd normal form<a class="headerlink" href="#444-bcnf-boyce-codd-normal-form" title="Permanent link">&para;</a></h3>
+<div class="admonition note">
+<p class="admonition-title">BCNF</p>
+<p>For every non-trivial FD <span class="arithmatex">\(X \to Y\)</span>: <strong><span class="arithmatex">\(X\)</span> is a superkey</strong>.</p>
+</div>
+<p>BCNF is stricter than 3NF: it removes all FDs based on non-superkey determinants, even if the RHS is prime.</p>
+<hr />
+<h2 id="worked-example-43-3nf-synthesis">Worked example 4.3 — 3NF synthesis<a class="headerlink" href="#worked-example-43-3nf-synthesis" title="Permanent link">&para;</a></h2>
+<p><strong>Given.</strong> <span class="arithmatex">\(R(A,B,C,D,E)\)</span> with <span class="arithmatex">\(F = \{AB \to C,\ C \to D,\ D \to E\}\)</span>.</p>
+<p><strong>Step 1 — minimal cover.</strong> <span class="arithmatex">\(F\)</span> is minimal.</p>
+<p><strong>Step 2 — combine FDs with the same LHS.</strong> None shared.</p>
+<p><strong>Step 3 — create a relation per dependency:</strong></p>
+<ul>
+<li><span class="arithmatex">\(R_1(A, B, C)\)</span></li>
+<li><span class="arithmatex">\(R_2(C, D)\)</span></li>
+<li><span class="arithmatex">\(R_3(D, E)\)</span></li>
+</ul>
+<p><strong>Step 4 — add a relation for any candidate key not covered.</strong> <span class="arithmatex">\(AB\)</span> is covered by <span class="arithmatex">\(R_1\)</span>.</p>
+<p><strong>Result.</strong> <span class="arithmatex">\(R_1, R_2, R_3\)</span> — in 3NF (each FD has a superkey or prime RHS) and <strong>dependency-preserving</strong>.</p>
+<p><strong>Is it BCNF?</strong> No. <span class="arithmatex">\(C \to D\)</span> has <span class="arithmatex">\(C\)</span> not a superkey of <span class="arithmatex">\(R_2\)</span>. Decompose <span class="arithmatex">\(R_2\)</span> into <span class="arithmatex">\(R_2'(C)\)</span> — but that loses the dependency. So 3NF is the best we can do while preserving dependencies.</p>
+<hr />
+<h2 id="45-practical-use-of-normal-forms">4.5 Practical use of normal forms<a class="headerlink" href="#45-practical-use-of-normal-forms" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>3NF</strong> is the practical target for most OLTP systems — it removes redundancy while preserving dependencies.</li>
+<li><strong>BCNF</strong> removes additional redundancy but may lose dependency preservation (may require join to check a dependency).</li>
+<li><strong>Denormalisation</strong> is sometimes used in data warehouses — deliberately introduce redundancy for query performance.</li>
+</ul>
+<hr />
+<h2 id="46-quiz">4.6 Quiz<a class="headerlink" href="#46-quiz" title="Permanent link">&para;</a></h2>
+<ol>
+<li>List the 7 steps of the ER-to-relational mapping.</li>
+<li>Map an ER model with a weak entity to relations.</li>
+<li>State Armstrong's three axioms.</li>
+<li>Compute the closure of <span class="arithmatex">\(AB\)</span> given <span class="arithmatex">\(AB \to C, C \to D, D \to E\)</span>.</li>
+<li>Distinguish 3NF from BCNF. Give an example of a relation that is in 3NF but not in BCNF.</li>
+</ol>
+<hr />
+<h2 id="answer-key">Answer key<a class="headerlink" href="#answer-key" title="Permanent link">&para;</a></h2>
+<details class="success">
+<summary>Click to reveal</summary>
+<ol>
+<li>Regular entities → weak entities → 1:1 → 1:N → M:N → multivalued → n-ary.</li>
+<li>Weak entity gets a relation with (owner PK, partial key) as PK.</li>
+<li>Reflexivity, augmentation, transitivity.</li>
+<li><span class="arithmatex">\(AB^+ = \{A,B,C,D,E\}\)</span>.</li>
+<li>3NF allows <span class="arithmatex">\(Y\)</span> prime in <span class="arithmatex">\(X \to Y\)</span>; BCNF requires <span class="arithmatex">\(X\)</span> superkey. Example: <span class="arithmatex">\(R(A,B,C)\)</span> with <span class="arithmatex">\(AB \to C, C \to B\)</span>. Candidate keys: <span class="arithmatex">\(AB, AC\)</span>. <span class="arithmatex">\(C \to B\)</span> has <span class="arithmatex">\(C\)</span> not a superkey, <span class="arithmatex">\(B\)</span> prime → 3NF but not BCNF.</li>
+</ol>
+</details>
+<hr />
+<h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Elmasri &amp; Navathe, §9.1–§9.2, §14.1–§14.6.</li>
+<li>Silberschatz et al., §7.1–§7.7.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

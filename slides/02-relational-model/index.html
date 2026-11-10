@@ -1,0 +1,2591 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-5193-Algorithm Analysis and Design/slides/02-relational-model/">
+      
+      
+        <link rel="prev" href="../01-introduction/">
+      
+      
+        <link rel="next" href="../03-er-modeling/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>2. Relational Model - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#eceg-4191" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. Relational Model
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus/" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule/" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapters/01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../solutions/" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-2-the-relational-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 2 — The Relational Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-data-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 — Data Models
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-the-relational-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 — The Relational Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-terminology" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 — Terminology
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-a-relation-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4 — A Relation Instance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-keys-the-four-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.5 — Keys: The Four Levels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-keys-worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.6 — Keys: Worked Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#27-entity-integrity-constraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.7 — Entity-Integrity Constraint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#28-referential-integrity-constraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.8 — Referential-Integrity Constraint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#29-referential-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.9 — Referential Actions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#210-schema-vs-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.10 — Schema vs Instance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#211-schema-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.11 — Schema Notation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#212-relational-algebra-preview" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.12 — Relational Algebra Preview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-21-identify-all-key-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.1 — Identify all key types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-22-detect-a-constraint-violation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.2 — Detect a constraint violation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#213-why-the-relational-model-dominates" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.13 — Why the Relational Model Dominates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-2-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 2 — key takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-chapter-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next — Chapter 3
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../solutions/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-2-the-relational-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 2 — The Relational Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-data-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 — Data Models
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-the-relational-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 — The Relational Model
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-terminology" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 — Terminology
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-a-relation-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4 — A Relation Instance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-keys-the-four-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.5 — Keys: The Four Levels
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-keys-worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.6 — Keys: Worked Example
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#27-entity-integrity-constraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.7 — Entity-Integrity Constraint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#28-referential-integrity-constraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.8 — Referential-Integrity Constraint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#29-referential-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.9 — Referential Actions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#210-schema-vs-instance" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.10 — Schema vs Instance
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#211-schema-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.11 — Schema Notation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#212-relational-algebra-preview" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.12 — Relational Algebra Preview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-21-identify-all-key-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.1 — Identify all key types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-22-detect-a-constraint-violation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 2.2 — Detect a constraint violation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#213-why-the-relational-model-dominates" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.13 — Why the Relational Model Dominates
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-2-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 2 — key takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-chapter-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next — Chapter 3
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="eceg-4191">ECEG-4191<a class="headerlink" href="#eceg-4191" title="Permanent link">&para;</a></h1>
+<h2 id="chapter-2-the-relational-model">Chapter 2 — The Relational Model<a class="headerlink" href="#chapter-2-the-relational-model" title="Permanent link">&para;</a></h2>
+<hr />
+<h2 id="learning-outcomes">Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
+<div class="fragment">
+
+1. Classify the three types of **data models** (conceptual, logical, physical).
+
+</div>
+
+<div class="fragment">
+
+2. Define a **relation** formally and identify its components: tuples, attributes, domains, degree, cardinality.
+
+</div>
+
+<div class="fragment">
+
+3. Distinguish **superkey**, **candidate key**, **primary key**, and **foreign key**.
+
+</div>
+
+<div class="fragment">
+
+4. State and apply the **entity-integrity** and **referential-integrity** constraints.
+
+</div>
+
+<div class="fragment">
+
+5. Distinguish a **schema** from an **instance**.
+
+</div>
+
+<hr />
+<h2 id="21-data-models">2.1 — Data Models<a class="headerlink" href="#21-data-models" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Definition</summary>
+<p>A <strong>data model</strong> is a collection of concepts for describing data, relationships, semantics, and constraints.</p>
+</details>
+<div class="fragment">
+
+???+ info "Three categories"
+    | Category | Purpose | Examples |
+    |---|---|---|
+    | **Conceptual** | High-level, user-oriented | ER model, EER model (Chapter 3) |
+    | **Logical** | DBMS-implementable | Relational, object-oriented, object-relational |
+    | **Physical** | Storage-level | Files, indexes, page layouts (Chapter 7) |
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Each model has its own purpose"
+    - Conceptual models are for **communication** with users.
+    - Logical models are for **implementation**.
+    - Physical models are for **performance**.
+
+</div>
+
+<hr />
+<h2 id="22-the-relational-model">2.2 — The Relational Model<a class="headerlink" href="#22-the-relational-model" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Definition (Codd 1970; Elmasri §3.1)</summary>
+<p>A <strong>relation</strong> <span class="arithmatex">\(r\)</span> over schema <span class="arithmatex">\(R(A_1, A_2, \ldots, A_n)\)</span> is a subset of the Cartesian product of domains <span class="arithmatex">\(D_1 \times D_2 \times \cdots \times D_n\)</span>.</p>
+</details>
+<div class="fragment">
+
+???+ info "What this means in practice"
+    - A relation is a **set of tuples** — each tuple belongs to exactly one combination of domain values.
+    - The **order** of tuples is irrelevant.
+    - Each attribute value is **atomic** — no nested relations, no sets.
+
+</div>
+
+<div class="fragment">
+
+!!! warning "Codd's requirements"
+    - **No duplicate tuples** — a relation is a set, not a multiset.
+    - **No ordering of tuples** — mathematically, there is no "first" tuple.
+    - **No ordering of attributes** — although practical DBMSes fix a presentation order.
+
+</div>
+
+<hr />
+<h2 id="23-terminology">2.3 — Terminology<a class="headerlink" href="#23-terminology" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>The formal/informal mapping</summary>
+<table>
+<thead>
+<tr>
+<th>Formal</th>
+<th>Informal</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Relation</td>
+<td>Table</td>
+<td><code>EMPLOYEE</code></td>
+</tr>
+<tr>
+<td>Tuple</td>
+<td>Row</td>
+<td><code>(101, 'Alice', 50000, 10)</code></td>
+</tr>
+<tr>
+<td>Attribute</td>
+<td>Column</td>
+<td><code>name</code></td>
+</tr>
+<tr>
+<td>Domain</td>
+<td>Data type + constraints</td>
+<td><code>INTEGER</code>, <code>VARCHAR(50)</code></td>
+</tr>
+<tr>
+<td>Degree</td>
+<td>Number of columns</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Cardinality</td>
+<td>Number of rows</td>
+<td>1,000</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+???+ info "The informal terms are fine for conversation"
+    "Table", "row", and "column" are used informally everywhere — including in SQL documentation. "Relation", "tuple", and "attribute" are used in the formal theory and in query optimization.
+
+</div>
+
+<hr />
+<h2 id="24-a-relation-instance">2.4 — A Relation Instance<a class="headerlink" href="#24-a-relation-instance" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Example: <code>EMPLOYEE</code> relation</summary>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">emp_id</th>
+<th>ssn</th>
+<th>name</th>
+<th style="text-align: right;">salary</th>
+<th style="text-align: center;">dept_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">101</td>
+<td>111-22-3333</td>
+<td>Alice</td>
+<td style="text-align: right;">50,000</td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr>
+<td style="text-align: center;">102</td>
+<td>222-33-4444</td>
+<td>Bob</td>
+<td style="text-align: right;">60,000</td>
+<td style="text-align: center;">20</td>
+</tr>
+<tr>
+<td style="text-align: center;">103</td>
+<td>333-44-5555</td>
+<td>Carol</td>
+<td style="text-align: right;">55,000</td>
+<td style="text-align: center;">10</td>
+</tr>
+<tr>
+<td style="text-align: center;">104</td>
+<td>444-55-6666</td>
+<td>David</td>
+<td style="text-align: right;">45,000</td>
+<td style="text-align: center;">20</td>
+</tr>
+<tr>
+<td style="text-align: center;">105</td>
+<td>555-66-7777</td>
+<td>Eve</td>
+<td style="text-align: right;">70,000</td>
+<td style="text-align: center;">30</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+???+ info "Vocabulary check"
+    - **Degree** = 5 (five attributes).
+    - **Cardinality** = 5 (five tuples).
+    - **Domain of `salary`** = non-negative integers (or a DECIMAL type with a range).
+    - **Primary key** = `emp_id`.
+
+</div>
+
+<aside class="notes">
+  <div style="font-size: 16px; line-height: 1.6;">
+Walk through this table slowly. Ask: what would happen if we allowed duplicate tuples? Then the "relation as set" property breaks, and operations like union, difference, and division become ambiguous. This is why SQL's default (bag semantics) is a departure from Codd's pure model, requiring DISTINCT.
+  </div>
+</aside>
+
+<hr />
+<h2 id="25-keys-the-four-levels">2.5 — Keys: The Four Levels<a class="headerlink" href="#25-keys-the-four-levels" title="Permanent link">&para;</a></h2>
+<details class="abstract" open="open">
+<summary>Superkey</summary>
+<p>Any set of attributes <span class="arithmatex">\(K \subseteq R\)</span> such that no two tuples agree on <span class="arithmatex">\(K\)</span>.</p>
+</details>
+<div class="fragment">
+
+???+ abstract "Candidate key"
+    A **minimal** superkey — no proper subset of $K$ is a superkey.
+
+</div>
+
+<div class="fragment">
+
+???+ abstract "Primary key"
+    A **chosen** candidate key (the "official" identifier).
+
+</div>
+
+<div class="fragment">
+
+???+ abstract "Foreign key"
+    An attribute (or set) in relation $R_1$ that references the **primary key** of another relation $R_2$.
+
+</div>
+
+<div class="fragment">
+
+!!! tip "The hierarchy"
+    Every **candidate key** is a **superkey**, but not vice versa. The primary key is one of the candidate keys. Foreign keys reference primary keys.
+
+</div>
+
+<hr />
+<h2 id="26-keys-worked-example">2.6 — Keys: Worked Example<a class="headerlink" href="#26-keys-worked-example" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Given relation <code>EMPLOYEE(emp_id, ssn, name, dept_id)</code></summary>
+<table>
+<thead>
+<tr>
+<th>Key type</th>
+<th>Example</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Superkey</strong></td>
+<td><code>(emp_id)</code>, <code>(ssn)</code>, <code>(emp_id, ssn)</code>, <code>(emp_id, name)</code>, <code>(ssn, name)</code></td>
+<td>All uniquely identify a tuple</td>
+</tr>
+<tr>
+<td><strong>Candidate key</strong></td>
+<td><code>emp_id</code>, <code>ssn</code></td>
+<td>Minimal — removing any attribute loses uniqueness</td>
+</tr>
+<tr>
+<td><strong>Primary key</strong></td>
+<td><code>emp_id</code></td>
+<td>Chosen as the official identifier</td>
+</tr>
+<tr>
+<td><strong>Foreign key</strong></td>
+<td><code>dept_id</code></td>
+<td>References <code>DEPARTMENT.dept_id</code></td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+???+ warning "Not every superkey is a candidate key"
+    `(emp_id, ssn)` is a superkey, but **not** a candidate key — because `emp_id` alone is already a superkey. The minimal ones are `emp_id` and `ssn`.
+
+</div>
+
+<hr />
+<h2 id="27-entity-integrity-constraint">2.7 — Entity-Integrity Constraint<a class="headerlink" href="#27-entity-integrity-constraint" title="Permanent link">&para;</a></h2>
+<details class="abstract" open="open">
+<summary>Entity-integrity constraint (Elmasri §3.2)</summary>
+<p><strong>No primary-key attribute may be NULL.</strong> Every tuple must have a unique, non-null identifier.</p>
+</details>
+<div class="fragment">
+
+???+ info "Why this is necessary"
+    If a primary key could be NULL:
+    - Multiple tuples could have NULL primary keys (NULL = NULL is unknown, not true).
+    - The tuple would have no identifier.
+    - Foreign keys referencing it would be ambiguous.
+
+</div>
+
+<div class="fragment">
+
+???+ warning "NULL is not a value"
+    In SQL, NULL means "unknown" or "does not exist". NULL = NULL evaluates to **UNKNOWN**, not TRUE. This is why you use `IS NULL`, not `= NULL`.
+
+</div>
+
+<hr />
+<h2 id="28-referential-integrity-constraint">2.8 — Referential-Integrity Constraint<a class="headerlink" href="#28-referential-integrity-constraint" title="Permanent link">&para;</a></h2>
+<details class="abstract" open="open">
+<summary>Referential-integrity constraint (Elmasri §3.2)</summary>
+<p>For a foreign key <span class="arithmatex">\(FK\)</span> in <span class="arithmatex">\(R_1\)</span> referencing primary key <span class="arithmatex">\(PK\)</span> in <span class="arithmatex">\(R_2\)</span>:</p>
+<p>For every tuple <span class="arithmatex">\(t_1 \in R_1\)</span>, either:
+- <span class="arithmatex">\(t_1[FK]\)</span> is NULL, <strong>or</strong>
+- there exists a tuple <span class="arithmatex">\(t_2 \in R_2\)</span> with <span class="arithmatex">\(t_2[PK] = t_1[FK]\)</span>.</p>
+</details>
+<div class="fragment">
+
+???+ note "What it prevents"
+    **Dangling references.** Without the constraint, `EMPLOYEE.dept_id = 99` could exist even though no `DEPARTMENT` with `dept_id = 99` exists.
+
+</div>
+
+<div class="fragment">
+
+!!! tip "The NULL allowance"
+    A foreign key **may be NULL** — this represents "no reference" (e.g., a new employee not yet assigned to a department). But it must not point to a non-existent primary key.
+
+</div>
+
+<hr />
+<h2 id="29-referential-actions">2.9 — Referential Actions<a class="headerlink" href="#29-referential-actions" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>What happens on DELETE / UPDATE of the referenced key?</summary>
+<table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Effect on the foreign key</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RESTRICT / NO ACTION</strong></td>
+<td>Reject the operation</td>
+</tr>
+<tr>
+<td><strong>CASCADE</strong></td>
+<td>Delete / update the referencing tuple</td>
+</tr>
+<tr>
+<td><strong>SET NULL</strong></td>
+<td>Set the foreign key to NULL</td>
+</tr>
+<tr>
+<td><strong>SET DEFAULT</strong></td>
+<td>Set the foreign key to its default</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+???+ info "Example: `DEPARTMENT` is deleted"
+    | Action | Result |
+    |---|---|
+    | RESTRICT | Delete fails — departments with employees cannot be deleted |
+    | CASCADE | Every employee in the department is also deleted |
+    | SET NULL | Employees' `dept_id` becomes NULL |
+    | SET DEFAULT | Employees' `dept_id` moves to a default department |
+
+</div>
+
+<div class="fragment">
+
+!!! warning "CASCADE is dangerous"
+    A single `DELETE FROM DEPARTMENT WHERE dept_id = 10` could delete hundreds of employees. Use CASCADE only when the relationship is **compositional** (the dependent cannot exist independently).
+
+</div>
+
+<hr />
+<h2 id="210-schema-vs-instance">2.10 — Schema vs Instance<a class="headerlink" href="#210-schema-vs-instance" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Schema vs instance</summary>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+<th>Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Schema</strong></td>
+<td>The structure — relation names, attribute names, types, constraints</td>
+<td>Rarely</td>
+</tr>
+<tr>
+<td><strong>Instance</strong></td>
+<td>The current set of tuples</td>
+<td>Constantly</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+???+ info "Example schema"
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="n">emp_id</span><span class="w">  </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">name</span><span class="w">    </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">,</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="n">salary</span><span class="w">  </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">CHECK</span><span class="w"> </span><span class="p">(</span><span class="n">salary</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="n">dept_id</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">dept_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="p">(</span><span class="n">dept_id</span><span class="p">)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">);</span>
+</span></code></pre></div>
+
+    This is the **schema** — defined once, changed rarely.
+
+</div>
+
+<div class="fragment">
+
+???+ info "Example instance"
+    | emp_id | name | salary | dept_id |
+    |:---:|---|---:|---:|
+    | 101 | Alice | 50,000 | 10 |
+    | 102 | Bob | 60,000 | 20 |
+
+    The **instance** changes with every insert, update, delete.
+
+</div>
+
+<hr />
+<h2 id="211-schema-notation">2.11 — Schema Notation<a class="headerlink" href="#211-schema-notation" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Formal notation</summary>
+<p>A relation schema is written:</p>
+<div class="arithmatex">\[
+R(A_1, A_2, \ldots, A_n)
+\]</div>
+<p>with <strong>underlined primary key</strong>:</p>
+<div class="arithmatex">\[
+\text{EMPLOYEE}(\underline{\text{emp\_id}}, \text{ssn}, \text{name}, \text{salary}, \text{dept\_id})
+\]</div>
+</details>
+<div class="fragment">
+
+???+ info "Foreign keys are shown with arrows"
+    $$
+    \text{EMPLOYEE}(\underline{\text{emp\_id}}, \text{name}, \text{salary}, \text{dept\_id} \to \text{DEPARTMENT})
+    $$
+
+</div>
+
+<div class="fragment">
+
+!!! tip "This notation is the basis for everything in Chapter 4"
+    ER-to-relational mapping (Chapter 4) produces exactly this notation. Normalization (Chapter 4) operates on these schemas.
+
+</div>
+
+<hr />
+<h2 id="212-relational-algebra-preview">2.12 — Relational Algebra Preview<a class="headerlink" href="#212-relational-algebra-preview" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>What operations does the model support?</summary>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Symbol</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Selection</td>
+<td><span class="arithmatex">\(\sigma\)</span></td>
+<td>Filter tuples</td>
+</tr>
+<tr>
+<td>Projection</td>
+<td><span class="arithmatex">\(\pi\)</span></td>
+<td>Select columns</td>
+</tr>
+<tr>
+<td>Union</td>
+<td><span class="arithmatex">\(\cup\)</span></td>
+<td>Combine two relations</td>
+</tr>
+<tr>
+<td>Difference</td>
+<td><span class="arithmatex">\(-\)</span></td>
+<td>Tuples in one but not other</td>
+</tr>
+<tr>
+<td>Cartesian product</td>
+<td><span class="arithmatex">\(\times\)</span></td>
+<td>Every pairing</td>
+</tr>
+<tr>
+<td>Join</td>
+<td><span class="arithmatex">\(\bowtie\)</span></td>
+<td>Combine on matching values</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+!!! tip "Chapter 5 develops these in full"
+    For now, understand that the relational model is not just data structures — it comes with a **query algebra**. That is what makes it uniquely powerful.
+
+</div>
+
+<hr />
+<h2 id="worked-example-21-identify-all-key-types">Worked example 2.1 — Identify all key types<a class="headerlink" href="#worked-example-21-identify-all-key-types" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Problem:</p>
+<p>Given:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>STUDENT(student_id, ssn, name, dept, advisor_id)
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>COURSE(course_id, title, credits)
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>ENROLL(student_id, course_id, grade, semester)
+</span></code></pre></div>
+<p>Identify superkeys, candidate keys, primary keys, and foreign keys.</p>
+</div>
+<div class="fragment">
+
+???+ note "**STUDENT**"
+    - **Candidate keys:** `student_id`, `ssn`.
+    - **Primary key:** `student_id`.
+    - **Foreign key:** `advisor_id` → `STUDENT.student_id`.
+
+</div>
+
+<div class="fragment">
+
+??? info "**COURSE**"
+    - **Candidate keys:** `course_id`.
+    - **Primary key:** `course_id`.
+
+</div>
+
+<div class="fragment">
+
+??? info "**ENROLL**"
+    - **Candidate key:** `(student_id, course_id, semester)` — because a student can take the same course in different semesters.
+    - **Primary key:** `(student_id, course_id, semester)`.
+    - **Foreign keys:** `student_id` → `STUDENT`, `course_id` → `COURSE`.
+
+</div>
+
+<div class="fragment">
+
+??? success "**Conclusion.**"
+    Every table has exactly one primary key; foreign keys establish references; **composite keys** (ENROLL) arise when a single attribute is insufficient.
+
+</div>
+
+<hr />
+<h2 id="worked-example-22-detect-a-constraint-violation">Worked example 2.2 — Detect a constraint violation<a class="headerlink" href="#worked-example-22-detect-a-constraint-violation" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Problem:</p>
+<p>Given:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>EMPLOYEE(emp_id, name, dept_id)   -- dept_id → DEPARTMENT
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>DEPARTMENT(dept_id, dname)
+</span></code></pre></div>
+<p>Current state:</p>
+<table>
+<thead>
+<tr>
+<th>EMPLOYEE</th>
+<th>emp_id</th>
+<th>name</th>
+<th>dept_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Alice</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Bob</td>
+<td>20</td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Carol</td>
+<td>99</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>DEPARTMENT</th>
+<th>dept_id</th>
+<th>dname</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>Sales</td>
+<td></td>
+</tr>
+<tr>
+<td>20</td>
+<td>Engineering</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Which constraint is violated?</p>
+</div>
+<div class="fragment">
+
+???+ note "**Step 1 — check entity integrity.**"
+    All `emp_id` values are non-NULL and unique → **satisfied**.
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 2 — check referential integrity.**"
+    - `Alice → 10`: 10 exists in DEPARTMENT ✓.
+    - `Bob → 20`: 20 exists in DEPARTMENT ✓.
+    - `Carol → 99`: 99 does NOT exist in DEPARTMENT → **violation**.
+
+</div>
+
+<div class="fragment">
+
+??? success "**Conclusion.**"
+    `Carol`'s `dept_id = 99` is a dangling reference. The DBMS would reject this tuple (unless `dept_id` were NULL).
+
+</div>
+
+<hr />
+<h2 id="213-why-the-relational-model-dominates">2.13 — Why the Relational Model Dominates<a class="headerlink" href="#213-why-the-relational-model-dominates" title="Permanent link">&para;</a></h2>
+<details class="info" open="open">
+<summary>Six reasons</summary>
+<table>
+<thead>
+<tr>
+<th>Reason</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Simple</strong></td>
+<td>One data structure: the relation</td>
+</tr>
+<tr>
+<td><strong>Mathematically grounded</strong></td>
+<td>Set theory + first-order logic</td>
+</tr>
+<tr>
+<td><strong>Query algebra</strong></td>
+<td>Provably equivalent to relational calculus</td>
+</tr>
+<tr>
+<td><strong>Data independence</strong></td>
+<td>Physical storage is hidden</td>
+</tr>
+<tr>
+<td><strong>Standardized</strong></td>
+<td>SQL (Chapter 6)</td>
+</tr>
+<tr>
+<td><strong>Implementable</strong></td>
+<td>Efficient storage and indexing (Chapter 7)</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+!!! tip "The historical argument"
+    Codd's 1970 paper was a **manifesto**: it argued that a simple data model with a formal algebra could replace the tangled hierarchical and network models. Fifty years later, it has won.
+
+</div>
+
+<hr />
+<h2 id="chapter-2-key-takeaways">Chapter 2 — key takeaways<a class="headerlink" href="#chapter-2-key-takeaways" title="Permanent link">&para;</a></h2>
+<div class="fragment">
+
+**1.** Three categories of data model: **conceptual** (ER), **logical** (relational), **physical** (files).
+
+</div>
+
+<div class="fragment">
+
+**2.** A **relation** is a set of tuples over a schema; each attribute takes values from a **domain**.
+
+</div>
+
+<div class="fragment">
+
+**3.** Four key levels: **superkey**, **candidate key**, **primary key**, **foreign key**. Every candidate is a superkey, but not vice versa.
+
+</div>
+
+<div class="fragment">
+
+**4.** **Entity-integrity:** primary keys are never NULL. **Referential-integrity:** foreign keys either are NULL or match a primary key.
+
+</div>
+
+<div class="fragment">
+
+**5.** **Referential actions** (RESTRICT, CASCADE, SET NULL, SET DEFAULT) determine what happens on delete/update of the referenced key.
+
+</div>
+
+<div class="fragment">
+
+**6.** **Schema** vs **instance** — structure vs. current data. The schema changes rarely; the instance constantly.
+
+</div>
+
+<hr />
+<h2 id="next-chapter-3">Next — Chapter 3<a class="headerlink" href="#next-chapter-3" title="Permanent link">&para;</a></h2>
+<p><strong>Conceptual Design and E-R Modelling.</strong></p>
+<div class="fragment">
+
+- The three design phases.
+- **Entities**, **attributes**, **relationships**.
+- **Cardinality ratios** and **participation constraints**.
+- **Weak entities** and identifying relationships.
+- **EER concepts:** subclasses, specialisation, generalisation, categories.
+- The **COMPANY** case study.
+
+</div>
+
+<div class="fragment">
+
+Chapter 2 described the target model. Chapter 3 describes how to **design** a database from requirements — before writing a single line of SQL.
+
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

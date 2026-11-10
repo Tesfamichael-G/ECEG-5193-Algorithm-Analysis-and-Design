@@ -1,0 +1,2402 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-5193-Algorithm Analysis and Design/slides/01-introduction/">
+      
+      
+        <link rel="prev" href="../../chapters/07-storage-hashing/">
+      
+      
+        <link rel="next" href="../02-relational-model/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>1. Introduction - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#eceg-4191" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. Introduction
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus/" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule/" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapters/01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../solutions/" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-1-introduction-to-database-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 1 — Introduction to Database Systems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-file-based-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 — File-Based Systems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-five-limitations-of-file-based-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 — Five Limitations of File-Based Systems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-concrete-example-of-redundancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 — Concrete Example of Redundancy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-the-database-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 — The Database Approach
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-dbms-environment-five-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4 — DBMS Environment: Five Components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-functions-of-a-dbms" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5 — Functions of a DBMS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-ansi-sparc-three-schema-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6 — ANSI-SPARC Three-Schema Architecture
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-data-independence" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.7 — Data Independence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-database-languages" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.8 — Database Languages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-database-development-life-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.9 — Database Development Life Cycle
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110-requirements-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.10 — Requirements Analysis
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-multi-user-dbms" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.11 — Multi-User DBMS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-common-uses-of-database-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.12 — Common Uses of Database Systems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-1-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 1 — key takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-chapter-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next — Chapter 2
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../solutions/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-1-introduction-to-database-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 1 — Introduction to Database Systems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-file-based-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.1 — File-Based Systems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-five-limitations-of-file-based-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 — Five Limitations of File-Based Systems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-concrete-example-of-redundancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.2 — Concrete Example of Redundancy
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-the-database-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.3 — The Database Approach
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-dbms-environment-five-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.4 — DBMS Environment: Five Components
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-functions-of-a-dbms" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.5 — Functions of a DBMS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-ansi-sparc-three-schema-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.6 — ANSI-SPARC Three-Schema Architecture
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-data-independence" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.7 — Data Independence
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-database-languages" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.8 — Database Languages
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-database-development-life-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.9 — Database Development Life Cycle
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110-requirements-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.10 — Requirements Analysis
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-multi-user-dbms" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.11 — Multi-User DBMS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-common-uses-of-database-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      1.12 — Common Uses of Database Systems
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-1-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 1 — key takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-chapter-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next — Chapter 2
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="eceg-4191">ECEG-4191<a class="headerlink" href="#eceg-4191" title="Permanent link">&para;</a></h1>
+<h2 id="chapter-1-introduction-to-database-systems">Chapter 1 — Introduction to Database Systems<a class="headerlink" href="#chapter-1-introduction-to-database-systems" title="Permanent link">&para;</a></h2>
+<hr />
+<h2 id="learning-outcomes">Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
+<p>By the end of this chapter you should be able to:</p>
+<div class="fragment">
+
+1. Explain **why file-based systems fail** at scale, with five concrete limitations.
+
+</div>
+
+<div class="fragment">
+
+2. Define a **DBMS** and describe its five components of the environment.
+
+</div>
+
+<div class="fragment">
+
+3. Draw and explain the **ANSI-SPARC three-schema architecture** and the two types of data independence.
+
+</div>
+
+<div class="fragment">
+
+4. Describe the **database development life cycle** (DBLC) and the role of each phase.
+
+</div>
+
+<div class="fragment">
+
+5. Identify the **five components** of a multi-user DBMS and the trade-offs between them.
+
+</div>
+
+<hr />
+<h2 id="11-file-based-systems">1.1 — File-Based Systems<a class="headerlink" href="#11-file-based-systems" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Definition</summary>
+<p>A <strong>file-based system</strong> stores data in separate files, each managed by its own application program. There is no centralized control over the data.</p>
+</details>
+<div class="fragment">
+
+???+ info "The canonical structure"
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Application 1  ───►  File 1 (Students)
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Application 2  ───►  File 2 (Courses)
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Application 3  ───►  File 3 (Enrollments)
+</span></code></pre></div>
+
+    Each application has its own view of the data — and its own copy.
+
+</div>
+
+<div class="fragment">
+
+!!! warning "The fundamental problem"
+    Data is **owned by applications**, not by the enterprise. Any change to the data format requires updating every application that touches it.
+
+</div>
+
+<hr />
+<h2 id="12-five-limitations-of-file-based-systems">1.2 — Five Limitations of File-Based Systems<a class="headerlink" href="#12-five-limitations-of-file-based-systems" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>1. Data redundancy</summary>
+<p>The same fact is stored in multiple files. A student's name appears in <code>Students</code>, <code>Enrollments</code>, and <code>Grades</code>.</p>
+</details>
+<div class="fragment">
+
+???+ note "2. Data inconsistency"
+    Different copies diverge over time. Updating the name in one file but not the others creates **contradictions**.
+
+</div>
+
+<div class="fragment">
+
+???+ note "3. Program-data dependence"
+    The file format is defined **inside the program**. Changing the format (adding a column, changing a length) requires editing every program.
+
+</div>
+
+<div class="fragment">
+
+???+ note "4. Difficulty of access"
+    New questions ("Which students took CS301 in 2023?") require writing **new programs**, not just new queries.
+
+</div>
+
+<div class="fragment">
+
+???+ note "5. Concurrency and atomicity"
+    Multiple users can corrupt data. A crash mid-update leaves the data **inconsistent**.
+
+</div>
+
+<hr />
+<h2 id="12-concrete-example-of-redundancy">1.2 — Concrete Example of Redundancy<a class="headerlink" href="#12-concrete-example-of-redundancy" title="Permanent link">&para;</a></h2>
+<details class="info" open="open">
+<summary>A university with three applications</summary>
+<table>
+<thead>
+<tr>
+<th>Application</th>
+<th>File</th>
+<th>Fields</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Registrar</td>
+<td><code>Students.dat</code></td>
+<td>id, name, address, dept</td>
+</tr>
+<tr>
+<td>Payroll</td>
+<td><code>Payroll.dat</code></td>
+<td>id, name, dept, salary</td>
+</tr>
+<tr>
+<td>Library</td>
+<td><code>Loans.dat</code></td>
+<td>id, name, book, date</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+!!! warning "Three copies of `name` and `dept`"
+    - **Update anomaly:** when a student changes their name, three files must be updated — if any is missed, the data becomes inconsistent.
+    - **Insertion anomaly:** you cannot record a new department until a student joins it.
+    - **Deletion anomaly:** deleting a student's payroll record also deletes their `name` and `dept` — even if the registrar still needs them.
+
+</div>
+
+<aside class="notes">
+  <div style="font-size: 16px; line-height: 1.6;">
+These three anomalies — update, insertion, deletion — are the concrete symptoms of redundancy. The database approach does not just "store data in one place"; it eliminates the structural causes of these anomalies. That is the real argument for normalization (Chapter 4).
+  </div>
+</aside>
+
+<hr />
+<h2 id="13-the-database-approach">1.3 — The Database Approach<a class="headerlink" href="#13-the-database-approach" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Definition (Elmasri §1.3)</summary>
+<p>A <strong>database</strong> is an organized collection of structured data. A <strong>DBMS</strong> is software that manages and controls access to the database.</p>
+</details>
+<div class="fragment">
+
+???+ info "Key properties of the database approach"
+    | Property | Meaning |
+    |---|---|
+    | **Self-describing** | The database stores its own schema (catalog / data dictionary) |
+    | **Insulation** | Programs are independent of data format |
+    | **Multiple views** | Different users see different subsets |
+    | **Sharing** | Multiple users and programs share one store |
+    | **Transaction support** | ACID properties |
+    | **Integrity constraints** | Enforced by the DBMS, not the program |
+
+</div>
+
+<div class="fragment">
+
+!!! tip "The key insight"
+    Data is a **shared corporate resource**. Applications come and go; data persists. The DBMS is the layer that lets data outlive applications.
+
+</div>
+
+<hr />
+<h2 id="14-dbms-environment-five-components">1.4 — DBMS Environment: Five Components<a class="headerlink" href="#14-dbms-environment-five-components" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Five components (Elmasri §1.5)</summary>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>┌──────────────────────────────────────────┐
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>│  People: users, programmers, DBAs,       │
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>│          designers                       │
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>├──────────────────────────────────────────┤
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│  Procedures: instructions for using      │
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│              the system                  │
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>├──────────────────────────────────────────┤
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│  Software: DBMS + application programs   │
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>├──────────────────────────────────────────┤
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│  Data: the database + the catalog        │
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>├──────────────────────────────────────────┤
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>│  Hardware: storage, CPU, network         │
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>└──────────────────────────────────────────┘
+</span></code></pre></div>
+</details>
+<div class="fragment">
+
+!!! warning "The people component is not an afterthought"
+    The DBA (Database Administrator) is responsible for:
+    - **Schema design** and evolution.
+    - **Security** (who can access what).
+    - **Performance tuning** (indexes, statistics).
+    - **Backup and recovery**.
+    - **Capacity planning**.
+
+</div>
+
+<hr />
+<h2 id="15-functions-of-a-dbms">1.5 — Functions of a DBMS<a class="headerlink" href="#15-functions-of-a-dbms" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>What the DBMS actually does</summary>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Data storage</strong></td>
+<td>Persistent, structured, at scale</td>
+</tr>
+<tr>
+<td><strong>Data retrieval</strong></td>
+<td>Query processing and optimization</td>
+</tr>
+<tr>
+<td><strong>Transaction management</strong></td>
+<td>ACID: atomicity, consistency, isolation, durability</td>
+</tr>
+<tr>
+<td><strong>Concurrency control</strong></td>
+<td>Multiple users without corruption</td>
+</tr>
+<tr>
+<td><strong>Recovery</strong></td>
+<td>Restore a consistent state after a crash</td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>Authentication and authorization</td>
+</tr>
+<tr>
+<td><strong>Integrity</strong></td>
+<td>Enforce constraints (keys, references)</td>
+</tr>
+<tr>
+<td><strong>Catalog</strong></td>
+<td>Metadata about the schema</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+???+ note "ACID in one line each"
+    - **Atomicity:** a transaction is all-or-nothing.
+    - **Consistency:** a transaction moves the database from one valid state to another.
+    - **Isolation:** concurrent transactions do not see each other's intermediate states.
+    - **Durability:** a committed transaction survives a crash.
+
+</div>
+
+<hr />
+<h2 id="16-ansi-sparc-three-schema-architecture">1.6 — ANSI-SPARC Three-Schema Architecture<a class="headerlink" href="#16-ansi-sparc-three-schema-architecture" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>The three levels (Elmasri §2.2)</summary>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>External schema 1     External schema 2     External schema 3
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>     (view)                 (view)                (view)
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>           \                  |                  /
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>            \                 |                 /
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>             ─────►  Conceptual schema  ◄─────
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>                      (community view)
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>                          |
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>                          |
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>                          ▼
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>                     Internal schema
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>                    (storage details)
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>                          |
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>                          ▼
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>                     Stored database
+</span></code></pre></div>
+</details>
+<div class="fragment">
+
+???+ note "The three schemas"
+    - **External (view) level** — what each user sees.
+    - **Conceptual (logical) level** — the enterprise-wide logical structure.
+    - **Internal (physical) level** — how data is stored.
+
+</div>
+
+<aside class="notes">
+  <div style="font-size: 16px; line-height: 1.6;">
+The three-schema architecture is the single most important design idea in databases. It is what makes data independence possible. Every modern DBMS implements it, even though the internal schema is often hidden from users.
+  </div>
+</aside>
+
+<hr />
+<h2 id="17-data-independence">1.7 — Data Independence<a class="headerlink" href="#17-data-independence" title="Permanent link">&para;</a></h2>
+<details class="abstract" open="open">
+<summary>Logical data independence</summary>
+<p>The ability to change the <strong>conceptual schema</strong> without changing the <strong>external schemas</strong>.</p>
+<p><em>Example:</em> add a <code>phone_number</code> column to <code>EMPLOYEE</code> — applications that don't select it are unaffected.</p>
+</details>
+<div class="fragment">
+
+???+ abstract "Physical data independence"
+    The ability to change the **internal schema** without changing the **conceptual schema**.
+
+    *Example:* change an index from B-tree to hash — queries written against the conceptual schema still work.
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Which is harder?"
+    **Logical data independence is harder** to achieve because changes to the conceptual schema can affect queries in subtle ways. Physical data independence is "automatic" — the query processor chooses the physical access path.
+
+</div>
+
+<hr />
+<h2 id="18-database-languages">1.8 — Database Languages<a class="headerlink" href="#18-database-languages" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>The three languages of a DBMS</summary>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Purpose</th>
+<th>Example statement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DDL</strong></td>
+<td>Define and modify the schema</td>
+<td><code>CREATE TABLE ...</code></td>
+</tr>
+<tr>
+<td><strong>DML</strong></td>
+<td>Query and modify the data</td>
+<td><code>SELECT ...</code>, <code>INSERT ...</code></td>
+</tr>
+<tr>
+<td><strong>DCL</strong></td>
+<td>Control access</td>
+<td><code>GRANT SELECT ON ... TO alice</code></td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+???+ info "DDL is compiled, DML is interpreted"
+    - DDL statements store **metadata** in the catalog.
+    - DML statements are **compiled** into a query plan, then **executed**.
+    - This is why the query processor has two stages: compilation and runtime.
+
+</div>
+
+<hr />
+<h2 id="19-database-development-life-cycle">1.9 — Database Development Life Cycle<a class="headerlink" href="#19-database-development-life-cycle" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Eight phases</summary>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. Requirements analysis</strong></td>
+<td>Requirements specification</td>
+</tr>
+<tr>
+<td><strong>2. Conceptual design</strong></td>
+<td>ER / EER model</td>
+</tr>
+<tr>
+<td><strong>3. Choice of DBMS</strong></td>
+<td>Vendor/product decision</td>
+</tr>
+<tr>
+<td><strong>4. Logical design</strong></td>
+<td>Relational schema, normalized</td>
+</tr>
+<tr>
+<td><strong>5. Physical design</strong></td>
+<td>Indexes, file structures, partitioning</td>
+</tr>
+<tr>
+<td><strong>6. Implementation</strong></td>
+<td>Schema in the DBMS, data loaded</td>
+</tr>
+<tr>
+<td><strong>7. Testing</strong></td>
+<td>Validated against requirements</td>
+</tr>
+<tr>
+<td><strong>8. Operation and maintenance</strong></td>
+<td>Monitoring, tuning, evolution</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+!!! warning "The DBLC is iterative"
+    Design flaws discovered in later phases force refinement of earlier ones. Most real projects iterate 2–3 times through the design phases.
+
+</div>
+
+<hr />
+<h2 id="110-requirements-analysis">1.10 — Requirements Analysis<a class="headerlink" href="#110-requirements-analysis" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>What goes into requirements</summary>
+<ul>
+<li><strong>Data requirements</strong> — what entities, attributes, relationships.</li>
+<li><strong>Functional requirements</strong> — what operations (queries, updates).</li>
+<li><strong>Non-functional requirements</strong> — performance, security, availability.</li>
+</ul>
+</details>
+<div class="fragment">
+
+???+ info "Techniques"
+    - **Interviews** with stakeholders.
+    - **Observation** of existing workflows.
+    - **Analysis of existing documents** (forms, reports).
+    - **Prototyping** — mock-ups to clarify requirements.
+
+</div>
+
+<div class="fragment">
+
+!!! tip "The cost of bad requirements"
+    Errors in requirements are the **most expensive to fix** — they propagate through every downstream phase. A 10× cost multiplier per phase is typical (Boehm's curve).
+
+</div>
+
+<hr />
+<h2 id="111-multi-user-dbms">1.11 — Multi-User DBMS<a class="headerlink" href="#111-multi-user-dbms" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>What changes when there are many users?</summary>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Concurrency control</strong></td>
+<td>Simultaneous updates can corrupt data</td>
+</tr>
+<tr>
+<td><strong>Transaction management</strong></td>
+<td>Commit/rollback on failure</td>
+</tr>
+<tr>
+<td><strong>Recovery</strong></td>
+<td>Restore consistency after a crash</td>
+</tr>
+<tr>
+<td><strong>Security</strong></td>
+<td>Authenticate, authorize</td>
+</tr>
+<tr>
+<td><strong>Views</strong></td>
+<td>Present tailored subsets</td>
+</tr>
+<tr>
+<td><strong>Performance</strong></td>
+<td>Scale with user count</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+???+ note "The concurrency problem in one line"
+    Two transactions reading and writing the same data can produce a state **no serial execution would produce** — a *race condition* at the database level.
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Isolation levels"
+    SQL standard defines four isolation levels (READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ, SERIALIZABLE). Higher isolation = fewer anomalies but less concurrency. This is the classic trade-off in multi-user DBMS.
+
+</div>
+
+<hr />
+<h2 id="112-common-uses-of-database-systems">1.12 — Common Uses of Database Systems<a class="headerlink" href="#112-common-uses-of-database-systems" title="Permanent link">&para;</a></h2>
+<details class="info" open="open">
+<summary>Where databases appear</summary>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Example system</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Banking</strong></td>
+<td>Account balances, transactions, loans</td>
+</tr>
+<tr>
+<td><strong>Airlines</strong></td>
+<td>Reservations, schedules, crew</td>
+</tr>
+<tr>
+<td><strong>Universities</strong></td>
+<td>Students, courses, grades, faculty</td>
+</tr>
+<tr>
+<td><strong>E-commerce</strong></td>
+<td>Products, orders, inventory, customers</td>
+</tr>
+<tr>
+<td><strong>Healthcare</strong></td>
+<td>Patients, records, prescriptions</td>
+</tr>
+<tr>
+<td><strong>Telecommunications</strong></td>
+<td>Call records, subscriptions, billing</td>
+</tr>
+<tr>
+<td><strong>Social networks</strong></td>
+<td>Users, posts, friendships, likes</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+!!! tip "Two patterns"
+    - **OLTP (Online Transaction Processing)** — many small, fast transactions. Banking, e-commerce.
+    - **OLAP (Online Analytical Processing)** — few large, complex queries. Data warehouses, business intelligence.
+
+</div>
+
+<hr />
+<h2 id="chapter-1-key-takeaways">Chapter 1 — key takeaways<a class="headerlink" href="#chapter-1-key-takeaways" title="Permanent link">&para;</a></h2>
+<div class="fragment">
+
+**1.** File-based systems fail because of **redundancy, inconsistency, program-data dependence, difficulty of access, and concurrency problems** — leading to update/insertion/deletion anomalies.
+
+</div>
+
+<div class="fragment">
+
+**2.** A **DBMS** is the software layer between users and data, providing storage, retrieval, transactions, concurrency, recovery, security, and integrity.
+
+</div>
+
+<div class="fragment">
+
+**3.** The **ANSI-SPARC** three-schema architecture separates **external** (views), **conceptual** (enterprise), and **internal** (physical) levels — enabling data independence.
+
+</div>
+
+<div class="fragment">
+
+**4.** **Logical data independence** is harder to achieve than physical because conceptual changes can ripple through queries.
+
+</div>
+
+<div class="fragment">
+
+**5.** The **DBLC** is an iterative eight-phase process; requirements analysis is the most consequential phase.
+
+</div>
+
+<div class="fragment">
+
+**6.** A **multi-user DBMS** adds concurrency control, transactions, recovery, and security — each with its own trade-offs.
+
+</div>
+
+<hr />
+<h2 id="next-chapter-2">Next — Chapter 2<a class="headerlink" href="#next-chapter-2" title="Permanent link">&para;</a></h2>
+<p><strong>The Relational Model.</strong></p>
+<div class="fragment">
+
+- Data models (conceptual, logical, physical).
+- **Relations**, **tuples**, **attributes**, **domains**.
+- **Keys**: superkey, candidate, primary, foreign.
+- **Entity-integrity** and **referential-integrity** constraints.
+- **Schema** vs. **instance**.
+
+</div>
+
+<div class="fragment">
+
+Chapter 1 described what a DBMS *is*. Chapter 2 describes the **data model** that almost every DBMS implements.
+
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

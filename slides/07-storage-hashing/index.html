@@ -1,0 +1,2408 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-5193-Algorithm Analysis and Design/slides/07-storage-hashing/">
+      
+      
+        <link rel="prev" href="../06-sql/">
+      
+      
+        <link rel="next" href="../../solutions/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>7. Storage and Hashing - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#eceg-4191" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7. Storage and Hashing
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus/" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule/" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapters/01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../solutions/" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-7-disk-storage-file-structures-and-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 7 — Disk Storage, File Structures, and Hashing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#71-disk-storage-physical-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 — Disk Storage: Physical Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-file-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 — File Organization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-71-disk-access-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.1 — Disk access time
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-fixed-vs-variable-length-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 — Fixed vs Variable-Length Records
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-static-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.4 — Static Hashing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-dynamic-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.5 — Dynamic Hashing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#76-extendible-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.6 — Extendible Hashing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-72-extendible-hashing-insert" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.2 — Extendible hashing insert
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#77-linear-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.7 — Linear Hashing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#78-raid-the-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.8 — RAID: The Idea
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#79-raid-levels-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.9 — RAID Levels 0–6
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-73-choose-a-raid-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.3 — Choose a RAID level
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#710-buffering-and-caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.10 — Buffering and Caching
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-7-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 7 — key takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#course-wrap-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      Course wrap-up
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../solutions/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-7-disk-storage-file-structures-and-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 7 — Disk Storage, File Structures, and Hashing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#71-disk-storage-physical-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 — Disk Storage: Physical Structure
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-file-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 — File Organization
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-71-disk-access-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.1 — Disk access time
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-fixed-vs-variable-length-records" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 — Fixed vs Variable-Length Records
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-static-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.4 — Static Hashing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-dynamic-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.5 — Dynamic Hashing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#76-extendible-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.6 — Extendible Hashing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-72-extendible-hashing-insert" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.2 — Extendible hashing insert
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#77-linear-hashing" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.7 — Linear Hashing
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#78-raid-the-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.8 — RAID: The Idea
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#79-raid-levels-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.9 — RAID Levels 0–6
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-73-choose-a-raid-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 7.3 — Choose a RAID level
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#710-buffering-and-caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.10 — Buffering and Caching
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-7-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 7 — key takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#course-wrap-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      Course wrap-up
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="eceg-4191">ECEG-4191<a class="headerlink" href="#eceg-4191" title="Permanent link">&para;</a></h1>
+<h2 id="chapter-7-disk-storage-file-structures-and-hashing">Chapter 7 — Disk Storage, File Structures, and Hashing<a class="headerlink" href="#chapter-7-disk-storage-file-structures-and-hashing" title="Permanent link">&para;</a></h2>
+<hr />
+<h2 id="learning-outcomes">Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
+<div class="fragment">
+
+1. Describe the **physical structure** of magnetic and solid-state storage.
+
+</div>
+
+<div class="fragment">
+
+2. Compute **disk access time** (seek + rotation + transfer) for a given workload.
+
+</div>
+
+<div class="fragment">
+
+3. Design **file organizations**: heap, sorted, hashed.
+
+</div>
+
+<div class="fragment">
+
+4. Explain **static, dynamic, and extendible hashing** and their trade-offs.
+
+</div>
+
+<div class="fragment">
+
+5. Choose an appropriate **RAID level** for a given workload.
+
+</div>
+
+<hr />
+<h2 id="71-disk-storage-physical-structure">7.1 — Disk Storage: Physical Structure<a class="headerlink" href="#71-disk-storage-physical-structure" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Magnetic hard disk (HDD)</summary>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Platter (rotates at 5400–15000 RPM)
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  │
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  ├── Tracks (concentric circles)
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  │     │
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  │     └── Sectors (fixed-size blocks, ~512 B–4 KB)
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  │
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  └── Read/write head per surface
+</span></code></pre></div>
+</details>
+<div class="fragment">
+
+???+ note "Access time components"
+    | Component | Typical value | Cause |
+    |---|---|---|
+    | **Seek** | 3–10 ms | Move the head to the right track |
+    | **Rotation** | 2–6 ms (half a revolution) | Wait for the sector to rotate under |
+    | **Transfer** | 0.03–0.2 ms (per block) | Read the data |
+
+</div>
+
+<div class="fragment">
+
+!!! warning "Seek dominates"
+    For random access, seek + rotation is 100–500× the transfer time. This is why **disk scheduling** (Chapter 8 of OS) and **B-tree indexing** exist — both reduce the number of seeks.
+
+</div>
+
+<div class="fragment">
+
+???+ note "Solid-state drive (SSD)"
+    - NAND flash cells, no moving parts.
+    - **No seek, no rotation.**
+    - Random access ≈ 50–100 µs (vs. ~10 ms for HDD).
+    - Finite write cycles (~10⁴–10⁵ per cell); wear-leveling firmware.
+
+</div>
+
+<hr />
+<h2 id="72-file-organization">7.2 — File Organization<a class="headerlink" href="#72-file-organization" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>What is a file?</summary>
+<p>A <strong>file</strong> is a sequence of <strong>records</strong> stored on disk. Each record consists of <strong>fields</strong> (attributes).</p>
+</details>
+<div class="fragment">
+
+???+ note "Three fundamental organizations"
+    | Organization | Insert | Search by key | Range query |
+    |---|---|---|---|
+    | **Heap** | $O(1)$ | $O(b)$ full scan | $O(b)$ |
+    | **Sorted** | $O(b)$ | $O(\log_2 b)$ binary search | $O(\log b + \text{matches})$ |
+    | **Hashed** | $O(1)$ | $O(1)$ average | $O(b)$ (destroys order) |
+
+</div>
+
+<div class="fragment">
+
+!!! tip "The choice depends on the workload"
+    - **Heap** — if most queries scan the whole file.
+    - **Sorted** — if range queries and ordered scans dominate.
+    - **Hashed** — if point lookups dominate and range queries are rare.
+
+</div>
+
+<hr />
+<h2 id="worked-example-71-disk-access-time">Worked example 7.1 — Disk access time<a class="headerlink" href="#worked-example-71-disk-access-time" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Problem:</p>
+<p>HDD with 9 ms seek, 7200 RPM, 150 MB/s transfer. Compute the time to read a 4 KB block.</p>
+</div>
+<div class="fragment">
+
+???+ note "**Step 1 — rotational latency.**"
+    One revolution: $60 / 7200 = 8.333$ ms.
+    Average latency: half a revolution = **4.17 ms**.
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 2 — transfer time.**"
+    $$
+    T_{\text{transfer}} = \frac{4096}{150 \times 10^6} \approx 0.027\ \text{ms}.
+    $$
+
+</div>
+
+<div class="fragment">
+
+??? success "**Step 3 — total.**"
+    $$
+    T = 9 + 4.17 + 0.027 \approx \mathbf{13.2\ \text{ms per block}}.
+    $$
+
+    **IOPS** $\approx 1 / 0.0132 \approx \mathbf{76}$.
+
+</div>
+
+<div class="fragment">
+
+??? tip "**Comparison with SSD.**"
+    SSD random read: ~50–100 µs = **~0.075 ms**. That's **175× faster** than the HDD above. Random-access workloads (databases, VM) hit this difference hardest.
+
+</div>
+
+<hr />
+<h2 id="73-fixed-vs-variable-length-records">7.3 — Fixed vs Variable-Length Records<a class="headerlink" href="#73-fixed-vs-variable-length-records" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Fixed-length records</summary>
+<ul>
+<li>Every record has the <strong>same size</strong>.</li>
+<li>Direct access: <code>address = file_start + record_size × record_number</code>.</li>
+<li>Simple but wastes space (padding).</li>
+</ul>
+</details>
+<div class="fragment">
+
+???+ note "Variable-length records"
+    - Records differ in length (e.g., a `VARCHAR` field).
+    - **Slotted page** structure: a header, a slot directory, and variable-length record data.
+
+</div>
+
+<div class="fragment">
+
+???+ info "Slotted page layout"
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>┌─────────────────────────────────┐
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>│  Header (record count, free ptr) │
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├─────────────────────────────────┤
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│  Slot 1 → offset                 │
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│  Slot 2 → offset                 │
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│  ...                             │
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>├─────────────────────────────────┤
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│  Free space                      │
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>├─────────────────────────────────┤
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│  Record N                        │
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>│  Record ...                      │
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>│  Record 1                        │
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>└─────────────────────────────────┘
+</span></code></pre></div>
+
+    The slot directory points to record offsets. Records can move within the page without affecting external pointers.
+
+</div>
+
+<hr />
+<h2 id="74-static-hashing">7.4 — Static Hashing<a class="headerlink" href="#74-static-hashing" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Definition</summary>
+<p>A <strong>hash file</strong> uses a hash function <span class="arithmatex">\(h(k)\)</span> to map a key to a <strong>bucket</strong> (typically one disk block). All records with the same hash go to the same bucket.</p>
+</details>
+<div class="fragment">
+
+???+ note "Static hashing"
+    - The number of buckets $M$ is fixed at creation.
+    - $h(k) = k \bmod M$.
+    - **Problem:** if $M$ is too small, overflow chains grow.
+    - If $M$ is too large, most buckets are empty.
+
+</div>
+
+<div class="fragment">
+
+!!! warning "The overflow problem"
+    When a bucket is full, new records go to an **overflow block** chained from the primary. As the file grows, chains lengthen, and search degrades from $O(1)$ to $O(n)$.
+
+</div>
+
+<div class="fragment">
+
+???+ info "Example"
+    $M = 5$, keys $\{10, 15, 20, 25, 30, 35\}$, $h(k) = k \bmod 5$.
+
+    | Bucket | Keys |
+    |---|---|
+    | 0 | 10, 20, 30 |
+    | 1 | — |
+    | 2 | — |
+    | 3 | 15, 25, 35 |
+    | 4 | — |
+
+    Buckets 0 and 3 hold multiple records — overflow if capacity is less than 3.
+
+</div>
+
+<hr />
+<h2 id="75-dynamic-hashing">7.5 — Dynamic Hashing<a class="headerlink" href="#75-dynamic-hashing" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Why dynamic hashing?</summary>
+<p>Static hashing cannot grow or shrink gracefully. <strong>Dynamic hashing</strong> adjusts the number of buckets as the file grows.</p>
+</details>
+<div class="fragment">
+
+???+ note "Two main variants"
+    | Variant | Structure | Growth |
+    |---|---|---|
+    | **Extendible hashing** | Directory + buckets | Doubles directory when needed |
+    | **Linear hashing** | No directory | Splits one bucket at a time |
+
+</div>
+
+<div class="fragment">
+
+!!! tip "The trade-off"
+    - Extendible hashing has **$O(1)$ search** (via directory) but pays for directory maintenance.
+    - Linear hashing has **no directory** but may probe more than one bucket during splits.
+
+</div>
+
+<hr />
+<h2 id="76-extendible-hashing">7.6 — Extendible Hashing<a class="headerlink" href="#76-extendible-hashing" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>The structure</summary>
+<ul>
+<li><strong>Directory</strong> — an array of <span class="arithmatex">\(2^d\)</span> pointers, where <span class="arithmatex">\(d\)</span> is the <strong>global depth</strong>.</li>
+<li><strong>Buckets</strong> — hold the actual records; each has a <strong>local depth</strong> <span class="arithmatex">\(d_i\)</span>.</li>
+<li>To find a record: use the first <span class="arithmatex">\(d\)</span> bits of <span class="arithmatex">\(h(k)\)</span> to index the directory.</li>
+</ul>
+</details>
+<div class="fragment">
+
+???+ note "Splitting a bucket"
+    When a bucket overflows:
+    1. If local depth $d_i < d$: increment $d_i$, split the bucket's records into two by the next bit, update directory pointers.
+    2. If local depth $d_i = d$: double the directory (increment $d$), then split.
+
+</div>
+
+<div class="fragment">
+
+???+ info "Search cost"
+    - **Directory lookup:** $O(1)$.
+    - **Bucket access:** $O(1)$.
+    - Total: **$O(1)$** — no overflow chains.
+
+</div>
+
+<hr />
+<h2 id="worked-example-72-extendible-hashing-insert">Worked example 7.2 — Extendible hashing insert<a class="headerlink" href="#worked-example-72-extendible-hashing-insert" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Problem:</p>
+<p>Start with <span class="arithmatex">\(d = 2\)</span> (4 directory entries). Buckets contain keys <span class="arithmatex">\(\{0, 4\}\)</span>, <span class="arithmatex">\(\{1, 5\}\)</span>, <span class="arithmatex">\(\{2, 6\}\)</span>, <span class="arithmatex">\(\{3, 7\}\)</span>. Bucket capacity = 2. Insert key 12.</p>
+</div>
+<div class="fragment">
+
+???+ note "**Step 1 — hash 12.**"
+    Assume $h(12) = 12$ (mod some power of 2). Binary: `1100`. First 2 bits: `11` → directory index 3.
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 2 — bucket 3 is full.**"
+    Bucket 3 currently holds $\{3, 7\}$ (local depth 2 = global depth).
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 3 — split requires doubling the directory.**"
+    Global depth becomes 3. Directory grows to 8 entries. Bucket 3's local depth becomes 3. Split $\{3, 7, 12\}$ by the third bit:
+    - `011` → bucket for 3
+    - `111` → bucket for 7, 12 (if capacity > 2, they stay; else split again).
+
+</div>
+
+<div class="fragment">
+
+??? success "**Result.**"
+    The directory doubled; buckets redistributed by one extra bit. **No overflow chains.** Search remains $O(1)$.
+
+</div>
+
+<hr />
+<h2 id="77-linear-hashing">7.7 — Linear Hashing<a class="headerlink" href="#77-linear-hashing" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>The idea</summary>
+<p>No directory. A <strong>split pointer</strong> moves through the buckets, splitting one bucket at a time when the load factor exceeds a threshold.</p>
+</details>
+<div class="fragment">
+
+???+ note "The algorithm"
+    - Buckets numbered $0, \ldots, M-1$, with a **level** $L$.
+    - Insert uses $h_L(k) = k \bmod (M \cdot 2^L)$.
+    - When load factor > threshold, split bucket at the split pointer (using $h_{L+1}$), then advance the pointer.
+    - When the pointer reaches the end, increment $L$ and reset the pointer.
+
+</div>
+
+<div class="fragment">
+
+???+ info "Trade-offs"
+    | Aspect | Extendible | Linear |
+    |---|---|---|
+    | Directory | Yes | No |
+    | Search | Always $O(1)$ | Usually $O(1)$, may need 2 lookups during split |
+    | Space overhead | Directory | Minimal |
+    | Simplicity | Moderate | Complex logic |
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Which is used in practice?"
+    Most production systems use **B-trees** rather than hashing for their primary index — because B-trees support range queries. Hashing wins for **point lookups only** (e.g., in-memory caches, key-value stores like Redis).
+
+</div>
+
+<hr />
+<h2 id="78-raid-the-idea">7.8 — RAID: The Idea<a class="headerlink" href="#78-raid-the-idea" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Definition</summary>
+<p><strong>RAID</strong> (Redundant Array of Independent Disks) combines multiple physical disks into a single logical unit for <strong>performance</strong>, <strong>reliability</strong>, or both.</p>
+</details>
+<div class="fragment">
+
+???+ note "Two fundamental techniques"
+    - **Striping** — split data across disks (performance).
+    - **Mirroring / parity** — duplicate data (reliability).
+
+</div>
+
+<div class="fragment">
+
+!!! warning "RAID is not backup"
+    RAID protects against **disk failure**, not against accidental deletion, corruption, ransomware, or site loss. Backup is a separate concern.
+
+</div>
+
+<hr />
+<h2 id="79-raid-levels-06">7.9 — RAID Levels 0–6<a class="headerlink" href="#79-raid-levels-06" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>The main levels</summary>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Technique</th>
+<th>Redundancy</th>
+<th>Performance</th>
+<th>Storage efficiency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RAID 0</strong></td>
+<td>Striping</td>
+<td>None</td>
+<td>Fastest</td>
+<td>100%</td>
+</tr>
+<tr>
+<td><strong>RAID 1</strong></td>
+<td>Mirroring</td>
+<td>Full</td>
+<td>Fast read, slow write</td>
+<td>50%</td>
+</tr>
+<tr>
+<td><strong>RAID 2</strong></td>
+<td>Bit striping + Hamming ECC</td>
+<td>Yes</td>
+<td>Medium</td>
+<td>Low</td>
+</tr>
+<tr>
+<td><strong>RAID 3</strong></td>
+<td>Byte striping + dedicated parity</td>
+<td>1 disk</td>
+<td>Medium</td>
+<td><span class="arithmatex">\(\frac{n-1}{n}\)</span></td>
+</tr>
+<tr>
+<td><strong>RAID 4</strong></td>
+<td>Block striping + dedicated parity</td>
+<td>1 disk</td>
+<td>Medium</td>
+<td><span class="arithmatex">\(\frac{n-1}{n}\)</span></td>
+</tr>
+<tr>
+<td><strong>RAID 5</strong></td>
+<td>Block striping + distributed parity</td>
+<td>1 disk</td>
+<td>Good read, slower write</td>
+<td><span class="arithmatex">\(\frac{n-1}{n}\)</span></td>
+</tr>
+<tr>
+<td><strong>RAID 6</strong></td>
+<td>Block striping + double parity</td>
+<td>2 disks</td>
+<td>Good read, slower write</td>
+<td><span class="arithmatex">\(\frac{n-2}{n}\)</span></td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+!!! tip "The practical winners"
+    - **RAID 0** — scratch space, no durability needed.
+    - **RAID 1** — small servers, two disks.
+    - **RAID 5** — general-purpose storage, read-heavy.
+    - **RAID 6** — large arrays, write-tolerant.
+    - **RAID 10** (not in the standard list) — mirror + stripe, best performance + reliability, 50% storage.
+
+</div>
+
+<div class="fragment">
+
+!!! warning "RAID 5 write penalty"
+    Every write requires **read-modify-write** of the parity block — the bottleneck for write-heavy workloads. RAID 10 avoids this; that's why databases often prefer it.
+
+</div>
+
+<hr />
+<h2 id="worked-example-73-choose-a-raid-level">Worked example 7.3 — Choose a RAID level<a class="headerlink" href="#worked-example-73-choose-a-raid-level" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Problem:</p>
+<p>Match each scenario to a RAID level.</p>
+</div>
+<div class="fragment">
+
+???+ note "**Scenario A — 10 TB backup server, sequential writes, cost matters.**"
+    **RAID 6.** Two-disk redundancy, ~67% storage efficiency, tolerates large-disk rebuilds.
+
+</div>
+
+<div class="fragment">
+
+??? info "**Scenario B — OLTP database, read-heavy, frequent small writes.**"
+    **RAID 10.** Fast reads (mirror), avoids RAID 5's parity write penalty, 50% storage.
+
+</div>
+
+<div class="fragment">
+
+??? info "**Scenario C — video editing scratch space, no persistence needed.**"
+    **RAID 0.** Maximum throughput, no durability required (data regenerated).
+
+</div>
+
+<div class="fragment">
+
+??? info "**Scenario D — home NAS, four 4 TB disks, mixed read/write.**"
+    **RAID 5.** 75% storage (12 TB usable), tolerates one disk failure, good read performance.
+
+</div>
+
+<div class="fragment">
+
+??? success "**The rule of thumb.**"
+    - Performance → RAID 0 or 10.
+    - Capacity → RAID 5.
+    - Safety at scale → RAID 6.
+    - Small/cheap → RAID 1.
+
+</div>
+
+<hr />
+<h2 id="710-buffering-and-caching">7.10 — Buffering and Caching<a class="headerlink" href="#710-buffering-and-caching" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>The disk is slow</summary>
+<p>Disk latency is ~100,000× CPU speed. The DBMS hides this with <strong>memory</strong>:</p>
+</details>
+<div class="fragment">
+
+???+ note "Three layers"
+    | Layer | Where | What it caches |
+    |---|---|---|
+    | **Buffer pool** | DBMS memory | Recently used disk pages |
+    | **OS page cache** | OS kernel | File-system pages |
+    | **On-disk cache** | Disk controller | Pre-fetched sectors |
+
+</div>
+
+<div class="fragment">
+
+???+ info "Replacement policies"
+    - **LRU** — evict least-recently used page.
+    - **Clock** — approximate LRU using a reference bit.
+    - **LRU-K** — evict page with oldest $K$-th most recent access.
+    - **ARC** — adaptive; balances recency and frequency.
+
+</div>
+
+<div class="fragment">
+
+!!! tip "The buffer pool is the DBMS's most valuable resource"
+    All query performance depends on it. Tuning its size and replacement policy is one of the DBA's most important jobs.
+
+</div>
+
+<hr />
+<h2 id="chapter-7-key-takeaways">Chapter 7 — key takeaways<a class="headerlink" href="#chapter-7-key-takeaways" title="Permanent link">&para;</a></h2>
+<div class="fragment">
+
+**1.** Disk access time = **seek + rotation + transfer**. Seek dominates — this is why disk scheduling and indexing exist.
+
+</div>
+
+<div class="fragment">
+
+**2.** **File organizations**: heap (fast insert, slow search), sorted (fast search, slow insert), hashed (fast point lookup, no order).
+
+</div>
+
+<div class="fragment">
+
+**3.** **Static hashing** has overflow chains that grow. **Dynamic hashing** (extendible, linear) grows gracefully.
+
+</div>
+
+<div class="fragment">
+
+**4.** **Extendible hashing** uses a directory; **linear hashing** uses a split pointer and no directory.
+
+</div>
+
+<div class="fragment">
+
+**5.** **RAID 0** = performance only, **RAID 1** = mirror, **RAID 5** = distributed parity (1-failure), **RAID 6** = double parity (2-failures).
+
+</div>
+
+<div class="fragment">
+
+**6.** **Buffer pools** and **caches** are the DBMS's defence against the 100,000× speed gap between CPU and disk.
+
+</div>
+
+<hr />
+<h2 id="course-wrap-up">Course wrap-up<a class="headerlink" href="#course-wrap-up" title="Permanent link">&para;</a></h2>
+<div class="fragment">
+
+**The arc of ECEG-4191:**
+
+1. **Chapter 1** — what a DBMS is, and why file-based systems fail.
+2. **Chapter 2** — the relational model: relations, keys, constraints.
+3. **Chapter 3** — conceptual design: ER/EER modelling.
+4. **Chapter 4** — logical design: ER-to-relational mapping and normalization.
+5. **Chapter 5** — relational algebra and calculus: the theoretical query language.
+6. **Chapter 6** — SQL: the practical query language.
+7. **Chapter 7** — storage and file structures: where the data lives.
+
+</div>
+
+<div class="fragment">
+
+!!! tip "The unifying question"
+    Every chapter asked: **how do we represent, design, query, and store data so that it is consistent, efficient, and evolvable?**
+
+    - **Represent** — the relational model.
+    - **Design** — ER modelling and normalization.
+    - **Query** — relational algebra and SQL.
+    - **Store** — file organizations, hashing, RAID.
+
+</div>
+
+<div class="fragment">
+
+**Good luck with the exam.**
+
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

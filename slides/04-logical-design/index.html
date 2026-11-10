@@ -1,0 +1,3096 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="BSc Electrical Engineering (Computer) · Semester VII · Module Data Storage and Analysis">
+      
+      
+        <meta name="author" content="Your Name">
+      
+      
+        <link rel="canonical" href="https://tesfamichael-g.github.io/ECEG-5193-Algorithm Analysis and Design/slides/04-logical-design/">
+      
+      
+        <link rel="prev" href="../03-er-modeling/">
+      
+      
+        <link rel="next" href="../05-relational-algebra/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>4. Logical Design - ECEG-4192 — Data Structures</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.50c56a3b.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#eceg-4191" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-header__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ECEG-4192 — Data Structures
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4. Logical Design
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../syllabus/" class="md-tabs__link">
+        
+  
+    
+  
+  Syllabus
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../schedule/" class="md-tabs__link">
+        
+  
+    
+  
+  Schedule
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapters/01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../01-introduction/" class="md-tabs__link">
+          
+  
+    
+  
+  Slides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../solutions/" class="md-tabs__link">
+          
+  
+    
+  
+  Solutions
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../exam-bank/" class="md-tabs__link">
+        
+  
+    
+  
+  Exam Bank
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../assessment/" class="md-tabs__link">
+        
+  
+    
+  
+  Assessment
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../resources/" class="md-tabs__link">
+        
+  
+    
+  
+  Resources
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../feedback/" class="md-tabs__link">
+        
+  
+    
+  
+  Feedback
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ECEG-4192 — Data Structures" class="md-nav__button md-logo" aria-label="ECEG-4192 — Data Structures" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 3h6v4H3V3m12 7h6v4h-6v-4m0 7h6v4h-6v-4m-2-4H7v5h6v2H5V9h2v2h6v2Z"/></svg>
+
+    </a>
+    ECEG-4192 — Data Structures
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../syllabus/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Syllabus
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../schedule/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schedule
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Chapters
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chapters
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapters/07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Slides
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Slides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-4-logical-design-and-normalisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 4 — Logical Design and Normalisation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#41-er-to-relational-mapping-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 — ER-to-Relational Mapping Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-step-1-regular-entity-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 — Step 1: Regular Entity Types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-step-2-weak-entity-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 — Step 2: Weak Entity Types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44-step-3-binary-11-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 — Step 3: Binary 1:1 Relationships
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#45-step-4-binary-1n-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5 — Step 4: Binary 1:N Relationships
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#46-step-5-binary-mn-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.6 — Step 5: Binary M:N Relationships
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#47-step-6-multivalued-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.7 — Step 6: Multivalued Attributes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#48-step-7-n-ary-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.8 — Step 7: N-ary Relationships
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-41-map-the-company-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.1 — Map the COMPANY database
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#49-eer-extra-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.9 — EER Extra Steps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-42-map-eer-specialisation-8a-vs-8c" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.2 — Map EER specialisation (8A vs 8C)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#410-functional-dependencies-fds" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.10 — Functional Dependencies (FDs)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#411-armstrongs-axioms" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.11 — Armstrong's Axioms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#412-closure-of-attribute-sets" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.12 — Closure of Attribute Sets
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-43-compute-ab" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.3 — Compute \((AB)^+\)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#413-minimal-cover" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.13 — Minimal Cover
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-44-compute-a-minimal-cover" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.4 — Compute a minimal cover
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#414-normal-forms-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.14 — Normal Forms Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#415-1nf-first-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.15 — 1NF — First Normal Form
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#416-2nf-second-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.16 — 2NF — Second Normal Form
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#417-3nf-third-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.17 — 3NF — Third Normal Form
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#418-bcnf-boyce-codd-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.18 — BCNF — Boyce-Codd Normal Form
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-45-full-normalisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.5 — Full normalisation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-46-3nf-but-not-bcnf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.6 — 3NF but not BCNF
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#419-decomposition-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.19 — Decomposition Properties
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#420-informal-design-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.20 — Informal Design Guidelines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-4-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 4 — key takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-chapter-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next — Chapter 5
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../solutions/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Solutions
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/01-introduction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1. Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/02-relational-model/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2. Relational Model
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/03-er-modeling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3. ER Modelling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/04-logical-design/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4. Logical Design
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/05-relational-algebra/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5. Relational Algebra
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/06-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6. SQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../solutions/07-storage-hashing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7. Storage and Hashing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../exam-bank/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Exam Bank
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../assessment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Assessment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feedback/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Feedback
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-4-logical-design-and-normalisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 4 — Logical Design and Normalisation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#learning-outcomes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Learning outcomes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#41-er-to-relational-mapping-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.1 — ER-to-Relational Mapping Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-step-1-regular-entity-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.2 — Step 1: Regular Entity Types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-step-2-weak-entity-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.3 — Step 2: Weak Entity Types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44-step-3-binary-11-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.4 — Step 3: Binary 1:1 Relationships
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#45-step-4-binary-1n-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.5 — Step 4: Binary 1:N Relationships
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#46-step-5-binary-mn-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.6 — Step 5: Binary M:N Relationships
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#47-step-6-multivalued-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.7 — Step 6: Multivalued Attributes
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#48-step-7-n-ary-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.8 — Step 7: N-ary Relationships
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-41-map-the-company-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.1 — Map the COMPANY database
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#49-eer-extra-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.9 — EER Extra Steps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-42-map-eer-specialisation-8a-vs-8c" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.2 — Map EER specialisation (8A vs 8C)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#410-functional-dependencies-fds" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.10 — Functional Dependencies (FDs)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#411-armstrongs-axioms" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.11 — Armstrong's Axioms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#412-closure-of-attribute-sets" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.12 — Closure of Attribute Sets
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-43-compute-ab" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.3 — Compute \((AB)^+\)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#413-minimal-cover" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.13 — Minimal Cover
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-44-compute-a-minimal-cover" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.4 — Compute a minimal cover
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#414-normal-forms-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.14 — Normal Forms Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#415-1nf-first-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.15 — 1NF — First Normal Form
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#416-2nf-second-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.16 — 2NF — Second Normal Form
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#417-3nf-third-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.17 — 3NF — Third Normal Form
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#418-bcnf-boyce-codd-normal-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.18 — BCNF — Boyce-Codd Normal Form
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-45-full-normalisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.5 — Full normalisation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#worked-example-46-3nf-but-not-bcnf" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worked example 4.6 — 3NF but not BCNF
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#419-decomposition-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.19 — Decomposition Properties
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#420-informal-design-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      4.20 — Informal Design Guidelines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-4-key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chapter 4 — key takeaways
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-chapter-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next — Chapter 5
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="eceg-4191">ECEG-4191<a class="headerlink" href="#eceg-4191" title="Permanent link">&para;</a></h1>
+<h2 id="chapter-4-logical-design-and-normalisation">Chapter 4 — Logical Design and Normalisation<a class="headerlink" href="#chapter-4-logical-design-and-normalisation" title="Permanent link">&para;</a></h2>
+<hr />
+<h2 id="learning-outcomes">Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">&para;</a></h2>
+<div class="fragment">
+
+1. Apply the **7-step ER-to-relational mapping** to any ER diagram.
+
+</div>
+
+<div class="fragment">
+
+2. Apply the **2 extra steps** for EER constructs (specialisation, categories).
+
+</div>
+
+<div class="fragment">
+
+3. Compute **closures** and **minimal covers** for sets of functional dependencies.
+
+</div>
+
+<div class="fragment">
+
+4. Determine whether a schema is in **1NF, 2NF, 3NF, BCNF**.
+
+</div>
+
+<div class="fragment">
+
+5. Decompose a schema into 3NF or BCNF while preserving properties.
+
+</div>
+
+<hr />
+<h2 id="41-er-to-relational-mapping-overview">4.1 — ER-to-Relational Mapping Overview<a class="headerlink" href="#41-er-to-relational-mapping-overview" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>The 7 steps (Elmasri §9.1)</summary>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Maps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Regular entity types</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Weak entity types</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Binary 1:1 relationships</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Binary 1:N relationships</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Binary M:N relationships</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Multivalued attributes</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>N-ary relationships</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+!!! tip "The order matters"
+    Steps 1–2 handle entities and their attributes. Steps 3–5 handle relationships. Steps 6–7 handle the "extras". Following the order avoids duplicate table creation.
+
+</div>
+
+<hr />
+<h2 id="42-step-1-regular-entity-types">4.2 — Step 1: Regular Entity Types<a class="headerlink" href="#42-step-1-regular-entity-types" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Rule</summary>
+<p>Each regular entity becomes a <strong>relation</strong>:
+- Include all <strong>simple</strong> attributes.
+- For each <strong>composite</strong> attribute, include only its simple components.
+- Choose one <strong>key</strong> attribute as the primary key.</p>
+</details>
+<div class="fragment">
+
+???+ info "Example: `EMPLOYEE(ssn, name(first, middle, last), sex, address, salary, bdate)`"
+    Becomes:
+
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="n">ssn</span><span class="w">     </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">first_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="n">middle_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="n">last_name</span><span class="w">   </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="n">sex</span><span class="w">     </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="n">address</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="n">salary</span><span class="w">  </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="n">bdate</span><span class="w">   </span><span class="nb">DATE</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">);</span>
+</span></code></pre></div>
+
+</div>
+
+<div class="fragment">
+
+!!! warning "Don't create a table for the composite attribute"
+    `name` is composite, but it is **not** a separate table. Its **simple components** (`first_name`, `middle_name`, `last_name`) become columns of `EMPLOYEE`.
+
+</div>
+
+<hr />
+<h2 id="43-step-2-weak-entity-types">4.3 — Step 2: Weak Entity Types<a class="headerlink" href="#43-step-2-weak-entity-types" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Rule</summary>
+<p>Each weak entity becomes a relation with:
+- Its own attributes.
+- The <strong>owner's primary key</strong> as a foreign key.
+- <strong>Primary key</strong> = (owner's primary key, partial key).</p>
+</details>
+<div class="fragment">
+
+???+ info "Example: `DEPENDENT`"
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">DEPENDENT</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="n">essn</span><span class="w">            </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="n">dependent_name</span><span class="w">  </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="n">sex</span><span class="w">             </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="n">birth_date</span><span class="w">      </span><span class="nb">DATE</span><span class="p">,</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="n">relationship</span><span class="w">    </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">essn</span><span class="p">,</span><span class="w"> </span><span class="n">dependent_name</span><span class="p">),</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">essn</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="p">(</span><span class="n">ssn</span><span class="p">)</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">);</span>
+</span></code></pre></div>
+
+</div>
+
+<div class="fragment">
+
+!!! tip "The full key is composite"
+    `dependent_name` is a **partial key** — unique only within one employee. The full key must include `essn` to be globally unique.
+
+</div>
+
+<hr />
+<h2 id="44-step-3-binary-11-relationships">4.4 — Step 3: Binary 1:1 Relationships<a class="headerlink" href="#44-step-3-binary-11-relationships" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Rule</summary>
+<p>Put the primary key of one side as a <strong>foreign key</strong> in the other side.</p>
+<p><strong>Prefer the side with total participation</strong> — that ensures every tuple on that side has a non-NULL reference.</p>
+</details>
+<div class="fragment">
+
+???+ info "Example: `EMPLOYEE MANAGES DEPARTMENT` (1:1)"
+    Both sides are partial in the COMPANY model. Standard choice: put the foreign key in `DEPARTMENT`:
+
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">DEPARTMENT</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">mgr_ssn</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">mgr_ssn</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="p">(</span><span class="n">ssn</span><span class="p">);</span>
+</span></code></pre></div>
+
+</div>
+
+<div class="fragment">
+
+!!! warning "Why NOT in EMPLOYEE?"
+    If `mgr_dno` were in `EMPLOYEE`, most employees would have NULL there (only one manager per department). Putting the reference in `DEPARTMENT` is more natural.
+
+</div>
+
+<div class="fragment">
+
+???+ note "The cross-reference option"
+    An alternative is a **cross-reference table** with both foreign keys. This is used when neither side has total participation and the relationship has its own attributes.
+
+</div>
+
+<hr />
+<h2 id="45-step-4-binary-1n-relationships">4.5 — Step 4: Binary 1:N Relationships<a class="headerlink" href="#45-step-4-binary-1n-relationships" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Rule</summary>
+<p>Put the <strong>primary key of the "1" side</strong> as a <strong>foreign key</strong> in the <strong>"N" side</strong>.</p>
+<p>This is the most common mapping — every <code>EMPLOYEE</code> has one <code>dno</code>.</p>
+</details>
+<div class="fragment">
+
+???+ info "Example: `EMPLOYEE WORKS_FOR DEPARTMENT` (N:1)"
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">EMPLOYEE</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">dno</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">dno</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="p">(</span><span class="n">dnumber</span><span class="p">);</span>
+</span></code></pre></div>
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Total participation ⇒ NOT NULL"
+    Because every employee must work for a department (total participation), add `NOT NULL`:
+
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">dno</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="p">;</span>
+</span></code></pre></div>
+
+</div>
+
+<hr />
+<h2 id="46-step-5-binary-mn-relationships">4.6 — Step 5: Binary M:N Relationships<a class="headerlink" href="#46-step-5-binary-mn-relationships" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Rule</summary>
+<p>Create a <strong>new relation</strong> with:
+- The primary keys of <strong>both sides</strong> as foreign keys.
+- Any <strong>relationship attributes</strong> (e.g., <code>hours</code>).
+- <strong>Primary key</strong> = the combination of both foreign keys.</p>
+</details>
+<div class="fragment">
+
+???+ info "Example: `EMPLOYEE WORKS_ON PROJECT` (M:N with `hours`)"
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">WORKS_ON</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="n">essn</span><span class="w">  </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="n">pno</span><span class="w">   </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="n">hours</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">essn</span><span class="p">,</span><span class="w"> </span><span class="n">pno</span><span class="p">),</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">essn</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="p">(</span><span class="n">ssn</span><span class="p">),</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">pno</span><span class="p">)</span><span class="w">  </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">PROJECT</span><span class="p">(</span><span class="n">pnumber</span><span class="p">)</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="p">);</span>
+</span></code></pre></div>
+
+</div>
+
+<div class="fragment">
+
+!!! warning "M:N cannot be a foreign key on either side"
+    A single `EMPLOYEE.ssn` cannot reference many projects, and a single `PROJECT.pnumber` cannot reference many employees. The cross-reference table is **required**.
+
+</div>
+
+<hr />
+<h2 id="47-step-6-multivalued-attributes">4.7 — Step 6: Multivalued Attributes<a class="headerlink" href="#47-step-6-multivalued-attributes" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Rule</summary>
+<p>Create a <strong>new relation</strong> with:
+- The <strong>multivalued attribute</strong> itself.
+- The <strong>owner's primary key</strong> as a foreign key.
+- <strong>Primary key</strong> = (owner's primary key, attribute).</p>
+</details>
+<div class="fragment">
+
+???+ info "Example: `DEPARTMENT.locations` (multivalued)"
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">DEPT_LOCATIONS</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="n">dnumber</span><span class="w">   </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="n">dlocation</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">dnumber</span><span class="p">,</span><span class="w"> </span><span class="n">dlocation</span><span class="p">),</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">dnumber</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="p">(</span><span class="n">dnumber</span><span class="p">)</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="p">);</span>
+</span></code></pre></div>
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Why not keep it in DEPARTMENT?"
+    A relational attribute must be **atomic** (1NF). A multivalued attribute would violate 1NF. The separate table is the standard fix.
+
+</div>
+
+<hr />
+<h2 id="48-step-7-n-ary-relationships">4.8 — Step 7: N-ary Relationships<a class="headerlink" href="#48-step-7-n-ary-relationships" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Rule</summary>
+<p>Create a <strong>new relation</strong> with:
+- The primary keys of <strong>all participating entities</strong> as foreign keys.
+- Any relationship attributes.
+- <strong>Primary key</strong> = the combination of all foreign keys (or a subset if some participants are functionally determined).</p>
+</details>
+<div class="fragment">
+
+???+ info "Example: `SUPPLIES(supplier, project, part, quantity)`"
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">SUPPLIES</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="n">supplier_id</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="n">project_id</span><span class="w">  </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="n">part_id</span><span class="w">     </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="n">quantity</span><span class="w">    </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">supplier_id</span><span class="p">,</span><span class="w"> </span><span class="n">project_id</span><span class="p">,</span><span class="w"> </span><span class="n">part_id</span><span class="p">),</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">supplier_id</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">SUPPLIER</span><span class="p">(</span><span class="n">supplier_id</span><span class="p">),</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">project_id</span><span class="p">)</span><span class="w">  </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">PROJECT</span><span class="p">(</span><span class="n">project_id</span><span class="p">),</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">part_id</span><span class="p">)</span><span class="w">     </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">PART</span><span class="p">(</span><span class="n">part_id</span><span class="p">)</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="p">);</span>
+</span></code></pre></div>
+
+</div>
+
+<div class="fragment">
+
+!!! warning "Ternary ≠ three binary relationships"
+    A ternary `SUPPLIES` means "supplier supplies part **to** project" — a joint constraint. Three separate binary relationships would lose the joint semantics.
+
+</div>
+
+<hr />
+<h2 id="worked-example-41-map-the-company-database">Worked example 4.1 — Map the COMPANY database<a class="headerlink" href="#worked-example-41-map-the-company-database" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Problem:</p>
+<p>Map the COMPANY ER model from Chapter 3 to a relational schema.</p>
+</div>
+<div class="fragment">
+
+???+ note "**Step 1 — regular entities.**"
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="n">ssn</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="n">first_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span><span class="w"> </span><span class="n">middle_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span><span class="w"> </span><span class="n">last_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="n">sex</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span><span class="w"> </span><span class="n">salary</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">bdate</span><span class="w"> </span><span class="nb">DATE</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="p">);</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="n">dnumber</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="n">dname</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span><span class="w"> </span><span class="k">UNIQUE</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="p">);</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">PROJECT</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">    </span><span class="n">pnumber</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">    </span><span class="n">pname</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span><span class="w"> </span><span class="k">location</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="p">);</span>
+</span></code></pre></div>
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 2 — weak entity.**"
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">DEPENDENT</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="n">essn</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="n">dependent_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="n">sex</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="n">birth_date</span><span class="w"> </span><span class="nb">DATE</span><span class="p">,</span><span class="w"> </span><span class="n">relationship</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">essn</span><span class="p">,</span><span class="w"> </span><span class="n">dependent_name</span><span class="p">),</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">essn</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="p">(</span><span class="n">ssn</span><span class="p">)</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="p">);</span>
+</span></code></pre></div>
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 3 — 1:1 `MANAGES`.**"
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">mgr_ssn</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">mgr_ssn</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="p">(</span><span class="n">ssn</span><span class="p">);</span>
+</span></code></pre></div>
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 4 — 1:N `WORKS_FOR`, `CONTROLS`, `SUPERVISES`.**"
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">dno</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">dno</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="p">(</span><span class="n">dnumber</span><span class="p">);</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">super_ssn</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">super_ssn</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="p">(</span><span class="n">ssn</span><span class="p">);</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">PROJECT</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">dnum</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="k">ADD</span><span class="w"> </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">dnum</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="p">(</span><span class="n">dnumber</span><span class="p">);</span>
+</span></code></pre></div>
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 5 — M:N `WORKS_ON`.**"
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">WORKS_ON</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="n">essn</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span><span class="w"> </span><span class="n">pno</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w"> </span><span class="n">hours</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">essn</span><span class="p">,</span><span class="w"> </span><span class="n">pno</span><span class="p">),</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">essn</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="p">(</span><span class="n">ssn</span><span class="p">),</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">pno</span><span class="p">)</span><span class="w">  </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">PROJECT</span><span class="p">(</span><span class="n">pnumber</span><span class="p">)</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="p">);</span>
+</span></code></pre></div>
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 6 — multivalued `locations`.**"
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">DEPT_LOCATIONS</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="n">dnumber</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span><span class="w"> </span><span class="n">dlocation</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">dnumber</span><span class="p">,</span><span class="w"> </span><span class="n">dlocation</span><span class="p">),</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">dnumber</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">DEPARTMENT</span><span class="p">(</span><span class="n">dnumber</span><span class="p">)</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="p">);</span>
+</span></code></pre></div>
+
+</div>
+
+<div class="fragment">
+
+??? success "**Result.**"
+    Seven tables: `EMPLOYEE`, `DEPARTMENT`, `PROJECT`, `DEPENDENT`, `WORKS_ON`, `DEPT_LOCATIONS`. All keys and foreign keys defined. No redundancy.
+
+</div>
+
+<hr />
+<h2 id="49-eer-extra-steps">4.9 — EER Extra Steps<a class="headerlink" href="#49-eer-extra-steps" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Step 8 — Specialisation / Generalisation</summary>
+<p>Four options (Elmasri §9.2):</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Structure</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>8A</strong></td>
+<td>Superclass table + subclass tables (each references superclass)</td>
+<td>Any specialisation</td>
+</tr>
+<tr>
+<td><strong>8B</strong></td>
+<td>Subclass tables only (each contains all superclass attributes)</td>
+<td>Total, disjoint specialisation</td>
+</tr>
+<tr>
+<td><strong>8C</strong></td>
+<td>Single table + type discriminator</td>
+<td>Disjoint, no subclass-specific attributes</td>
+</tr>
+<tr>
+<td><strong>8D</strong></td>
+<td>Single table + multiple boolean type attributes</td>
+<td>Overlapping</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+???+ note "Step 9 — Categories (Union types)"
+    Create one relation per subclass, plus a **category table** that holds the primary key of each participant and a **type discriminator**. The category table's rows reference the appropriate subclass tables.
+
+</div>
+
+<hr />
+<h2 id="worked-example-42-map-eer-specialisation-8a-vs-8c">Worked example 4.2 — Map EER specialisation (8A vs 8C)<a class="headerlink" href="#worked-example-42-map-eer-specialisation-8a-vs-8c" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Problem:</p>
+<p><code>EMPLOYEE</code> has subclasses <code>SECRETARY(typing_speed)</code> and <code>ENGINEER(engineering_field)</code>. Specialisation is disjoint, total. Map it two ways.</p>
+</div>
+<div class="fragment">
+
+???+ note "**Option 8A — separate tables.**"
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="n">ssn</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w"> </span><span class="n">first_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span><span class="w"> </span><span class="n">last_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="n">salary</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">dno</span><span class="w"> </span><span class="nb">INT</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="p">);</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">SECRETARY</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="n">ssn</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">    </span><span class="n">typing_speed</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">ssn</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="p">(</span><span class="n">ssn</span><span class="p">)</span>
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="p">);</span>
+</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">ENGINEER</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">    </span><span class="n">ssn</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-14-12"><a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">    </span><span class="n">engineering_field</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+</span><span id="__span-14-13"><a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">ssn</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="p">(</span><span class="n">ssn</span><span class="p">)</span>
+</span><span id="__span-14-14"><a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="p">);</span>
+</span></code></pre></div>
+
+    Every employee query must `JOIN` with the subclass table.
+
+</div>
+
+<div class="fragment">
+
+??? info "**Option 8C — single table with discriminator.**"
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">EMPLOYEE</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="n">ssn</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span><span class="w"> </span><span class="n">first_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span><span class="w"> </span><span class="n">last_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">30</span><span class="p">),</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="n">salary</span><span class="w"> </span><span class="nb">DECIMAL</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="n">dno</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="n">emp_type</span><span class="w"> </span><span class="nb">CHAR</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">CHECK</span><span class="w"> </span><span class="p">(</span><span class="n">emp_type</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">'S'</span><span class="p">,</span><span class="s1">'E'</span><span class="p">)),</span>
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span><span class="n">typing_speed</span><span class="w"> </span><span class="nb">INT</span><span class="p">,</span>
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="n">engineering_field</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="p">);</span>
+</span></code></pre></div>
+
+    Subclass-specific attributes are NULL for the "wrong" type. **Simpler** queries but **NULLs** everywhere.
+
+</div>
+
+<div class="fragment">
+
+??? success "**Which to choose?**"
+    - **8A** when there are **many** subclass-specific attributes and queries usually touch subclasses separately.
+    - **8C** when subclass-specific attributes are **few** and queries usually join back to the superclass.
+
+</div>
+
+<hr />
+<h2 id="410-functional-dependencies-fds">4.10 — Functional Dependencies (FDs)<a class="headerlink" href="#410-functional-dependencies-fds" title="Permanent link">&para;</a></h2>
+<details class="abstract" open="open">
+<summary>Definition (Elmasri §14.2)</summary>
+<p>A <strong>functional dependency</strong> <span class="arithmatex">\(X \to Y\)</span> on relation <span class="arithmatex">\(R\)</span> holds if, for every two tuples <span class="arithmatex">\(t_1, t_2\)</span> of <span class="arithmatex">\(R\)</span>:</p>
+<div class="arithmatex">\[
+t_1[X] = t_2[X] \implies t_1[Y] = t_2[Y].
+\]</div>
+<p>In words: <strong><span class="arithmatex">\(X\)</span> determines <span class="arithmatex">\(Y\)</span></strong> — the value of <span class="arithmatex">\(X\)</span> uniquely determines the value of <span class="arithmatex">\(Y\)</span>.</p>
+</details>
+<div class="fragment">
+
+???+ info "Example"
+    - `ssn → name` — two employees with the same SSN have the same name.
+    - `ssn → (name, bdate, address)` — an SSN determines the whole employee record.
+    - `(ssn, pno) → hours` — the hours on a project depend on both the employee and the project.
+
+</div>
+
+<div class="fragment">
+
+!!! warning "The direction is one-way"
+    `X → Y` **does not** imply `Y → X`. `ssn → name` holds, but `name → ssn` does not (two employees can share a name).
+
+</div>
+
+<hr />
+<h2 id="411-armstrongs-axioms">4.11 — Armstrong's Axioms<a class="headerlink" href="#411-armstrongs-axioms" title="Permanent link">&para;</a></h2>
+<details class="abstract" open="open">
+<summary>Three inference rules (sound and complete)</summary>
+<p><strong>Reflexivity.</strong> If <span class="arithmatex">\(Y \subseteq X\)</span>, then <span class="arithmatex">\(X \to Y\)</span>.</p>
+<p><strong>Augmentation.</strong> If <span class="arithmatex">\(X \to Y\)</span>, then <span class="arithmatex">\(XZ \to YZ\)</span> for any <span class="arithmatex">\(Z\)</span>.</p>
+<p><strong>Transitivity.</strong> If <span class="arithmatex">\(X \to Y\)</span> and <span class="arithmatex">\(Y \to Z\)</span>, then <span class="arithmatex">\(X \to Z\)</span>.</p>
+</details>
+<div class="fragment">
+
+???+ info "Derived rules"
+    - **Union:** $X \to Y$ and $X \to Z$ ⇒ $X \to YZ$.
+    - **Decomposition:** $X \to YZ$ ⇒ $X \to Y$ and $X \to Z$.
+    - **Pseudotransitivity:** $X \to Y$ and $WY \to Z$ ⇒ $WX \to Z$.
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Sound and complete"
+    **Sound** = every derived FD is true in every instance satisfying the original FDs. **Complete** = every FD implied by the originals can be derived. Armstrong's axioms are both.
+
+</div>
+
+<hr />
+<h2 id="412-closure-of-attribute-sets">4.12 — Closure of Attribute Sets<a class="headerlink" href="#412-closure-of-attribute-sets" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Definition</summary>
+<p>The <strong>closure</strong> <span class="arithmatex">\(X^+\)</span> of an attribute set <span class="arithmatex">\(X\)</span> under <span class="arithmatex">\(F\)</span> is the set of all attributes functionally determined by <span class="arithmatex">\(X\)</span> using Armstrong's axioms.</p>
+</details>
+<div class="fragment">
+
+???+ info "Algorithm"
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>X+ := X
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>repeat:
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    for each FD (A → B) in F:
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>        if A ⊆ X+ and B ⊄ X+:
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>            X+ := X+ ∪ B
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>until X+ does not change
+</span></code></pre></div>
+
+</div>
+
+<div class="fragment">
+
+???+ success "Uses of closure"
+    - **Test if $X$ is a superkey:** $X^+$ = all attributes.
+    - **Test if $X \to Y$ holds:** $Y \subseteq X^+$.
+    - **Compute candidate keys:** find minimal $X$ with $X^+$ = all attributes.
+
+</div>
+
+<hr />
+<h2 id="worked-example-43-compute-ab">Worked example 4.3 — Compute <span class="arithmatex">\((AB)^+\)</span><a class="headerlink" href="#worked-example-43-compute-ab" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Problem:</p>
+<p><span class="arithmatex">\(R(A,B,C,D,E)\)</span> with <span class="arithmatex">\(F = \{AB \to C,\ C \to D,\ D \to E\}\)</span>. Compute <span class="arithmatex">\((AB)^+\)</span>.</p>
+</div>
+<div class="fragment">
+
+???+ note "**Step 1 — initialise.**"
+    $(AB)^+ = \{A, B\}$.
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 2 — apply FDs.**"
+    - $AB \to C$: $AB \subseteq (AB)^+$, so add $C$ → $\{A,B,C\}$.
+    - $C \to D$: $C \subseteq (AB)^+$, so add $D$ → $\{A,B,C,D\}$.
+    - $D \to E$: $D \subseteq (AB)^+$, so add $E$ → $\{A,B,C,D,E\}$.
+
+</div>
+
+<div class="fragment">
+
+??? success "**Result.**"
+    $(AB)^+ = \{A, B, C, D, E\}$ — all attributes. So $AB$ is a **superkey**.
+
+    **Is $AB$ a candidate key?** Check $(A)^+ = \{A\}$, $(B)^+ = \{B\}$ — neither. So $AB$ is a **candidate key** (minimal).
+
+</div>
+
+<hr />
+<h2 id="413-minimal-cover">4.13 — Minimal Cover<a class="headerlink" href="#413-minimal-cover" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Definition</summary>
+<p>A <strong>minimal cover</strong> <span class="arithmatex">\(F_{\min}\)</span> of <span class="arithmatex">\(F\)</span> is a set of FDs equivalent to <span class="arithmatex">\(F\)</span> such that:</p>
+<ol>
+<li>Every FD has a <strong>single attribute on the right</strong>.</li>
+<li><strong>No redundant FD</strong> — removing any loses equivalence.</li>
+<li><strong>No redundant attribute on the left</strong> — the left side is minimal.</li>
+</ol>
+</details>
+<div class="fragment">
+
+???+ info "Algorithm"
+    1. Decompose RHS: $X \to AB$ becomes $X \to A$, $X \to B$.
+    2. Remove redundant LHS attributes: if $A$ is redundant in $AB \to C$ (i.e., $B \to C$ after removing $A$), drop $A$.
+    3. Remove redundant FDs: for each FD, remove it and see if it's still implied.
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Minimal covers are not unique"
+    Different removal orders give different but equivalent minimal covers. Any is valid.
+
+</div>
+
+<hr />
+<h2 id="worked-example-44-compute-a-minimal-cover">Worked example 4.4 — Compute a minimal cover<a class="headerlink" href="#worked-example-44-compute-a-minimal-cover" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Problem:</p>
+<p><span class="arithmatex">\(F = \{A \to B, ABCD \to E, EF \to G, EF \to H, ACDF \to EG\}\)</span>. Compute a minimal cover.</p>
+</div>
+<div class="fragment">
+
+???+ note "**Step 1 — decompose RHS.**"
+    - $A \to B$
+    - $ABCD \to E$
+    - $EF \to G$, $EF \to H$
+    - $ACDF \to E$, $ACDF \to G$
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 2 — remove redundant LHS attributes.**"
+    - For $ABCD \to E$: is $B, C, D$ redundant? Compute $(ACD)^+$. $A \to B$, so $(ACD)^+ \supseteq ABCD \to E$. So $B$ is redundant. New FD: $ACD \to E$.
+    - Similarly, $C$ and $D$ may be reducible further; compute $(AD)^+ \supseteq E$? Check step by step.
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 3 — remove redundant FDs.**"
+    Test each FD by removing it and checking if the remainder implies it via closure.
+
+</div>
+
+<div class="fragment">
+
+??? success "**Result.**"
+    A possible minimal cover: $\{A \to B, A \to E, A \to G, EF \to H\}$ (depending on redundancy analysis). The exact form varies, but the closure is preserved.
+
+</div>
+
+<hr />
+<h2 id="414-normal-forms-overview">4.14 — Normal Forms Overview<a class="headerlink" href="#414-normal-forms-overview" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>The four normal forms</summary>
+<table>
+<thead>
+<tr>
+<th>Normal Form</th>
+<th>Removes</th>
+<th>Requires</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1NF</strong></td>
+<td>Multivalued attributes</td>
+<td>Atomic values</td>
+</tr>
+<tr>
+<td><strong>2NF</strong></td>
+<td>Partial dependencies</td>
+<td>1NF + no partial dependency on part of a key</td>
+</tr>
+<tr>
+<td><strong>3NF</strong></td>
+<td>Transitive dependencies</td>
+<td>2NF + every FD has superkey LHS <strong>or</strong> prime RHS</td>
+</tr>
+<tr>
+<td><strong>BCNF</strong></td>
+<td>All non-superkey determinants</td>
+<td>3NF + <strong>every</strong> FD has superkey LHS</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+!!! tip "The hierarchy"
+    BCNF $\subset$ 3NF $\subset$ 2NF $\subset$ 1NF. Every BCNF relation is 3NF, every 3NF is 2NF, every 2NF is 1NF.
+
+</div>
+
+<hr />
+<h2 id="415-1nf-first-normal-form">4.15 — 1NF — First Normal Form<a class="headerlink" href="#415-1nf-first-normal-form" title="Permanent link">&para;</a></h2>
+<details class="abstract" open="open">
+<summary>1NF (Elmasri §14.3)</summary>
+<p>A relation is in <strong>1NF</strong> if every attribute value is <strong>atomic</strong> — no sets, no lists, no nested relations.</p>
+</details>
+<div class="fragment">
+
+???+ info "Violation example"
+    <div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>STUDENT(student_id, name, phones)
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>101, Alice, {555-1234, 555-5678}      ← multivalued
+</span></code></pre></div>
+
+    Fix: separate table `STUDENT_PHONE(student_id, phone)`.
+
+</div>
+
+<div class="fragment">
+
+!!! warning "1NF is not optional"
+    Relational algebra and SQL assume atomic values. Without 1NF, projection, join, and aggregate become ill-defined.
+
+</div>
+
+<hr />
+<h2 id="416-2nf-second-normal-form">4.16 — 2NF — Second Normal Form<a class="headerlink" href="#416-2nf-second-normal-form" title="Permanent link">&para;</a></h2>
+<details class="abstract" open="open">
+<summary>2NF</summary>
+<p>A relation is in <strong>2NF</strong> if it is in 1NF <strong>and</strong> every non-prime attribute is <strong>fully functionally dependent</strong> on every candidate key.</p>
+</details>
+<div class="fragment">
+
+???+ info "What is a partial dependency?"
+    A **partial dependency** exists when a non-prime attribute depends on **part** of a composite candidate key, not the whole key.
+
+    Example: `WORKS_ON(essn, pno, hours, ename)` with FD `essn → ename`. `ename` depends only on `essn`, part of the composite key `(essn, pno)`. **Violates 2NF.**
+
+</div>
+
+<div class="fragment">
+
+???+ info "Fix"
+    Decompose so that every non-prime attribute depends on the full key:
+    <div class="language-sql highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">EMPLOYEE</span><span class="p">(</span><span class="n">ssn</span><span class="p">,</span><span class="w"> </span><span class="n">ename</span><span class="p">,</span><span class="w"> </span><span class="p">...)</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">WORKS_ON</span><span class="p">(</span><span class="n">essn</span><span class="p">,</span><span class="w"> </span><span class="n">pno</span><span class="p">,</span><span class="w"> </span><span class="n">hours</span><span class="p">)</span>
+</span></code></pre></div>
+
+</div>
+
+<div class="fragment">
+
+!!! tip "2NF only matters for composite keys"
+    If a relation has a single-attribute primary key, it is **automatically in 2NF** — no partial dependency is possible.
+
+</div>
+
+<hr />
+<h2 id="417-3nf-third-normal-form">4.17 — 3NF — Third Normal Form<a class="headerlink" href="#417-3nf-third-normal-form" title="Permanent link">&para;</a></h2>
+<details class="abstract" open="open">
+<summary>3NF (Elmasri §14.4)</summary>
+<p>A relation is in <strong>3NF</strong> if it is in 2NF <strong>and</strong> no non-prime attribute is <strong>transitively dependent</strong> on any candidate key.</p>
+<p>Equivalently: for every non-trivial FD <span class="arithmatex">\(X \to Y\)</span>:</p>
+<ul>
+<li><span class="arithmatex">\(X\)</span> is a <strong>superkey</strong>, <strong>or</strong></li>
+<li><span class="arithmatex">\(Y\)</span> is a <strong>prime attribute</strong> (part of some candidate key).</li>
+</ul>
+</details>
+<div class="fragment">
+
+???+ info "What is a transitive dependency?"
+    `X → Y → Z` where `X` is a key and `Z` is non-prime. `Z` depends on `X` only through `Y`.
+
+    Example: `EMPLOYEE(ssn, name, dno, dname)`. `ssn → dno` (key → non-key) and `dno → dname` (non-key → non-key). `dname` is transitively dependent on `ssn`. **Violates 3NF.**
+
+</div>
+
+<div class="fragment">
+
+???+ info "Fix"
+    Decompose into `EMPLOYEE(ssn, name, dno)` and `DEPARTMENT(dno, dname)`.
+
+</div>
+
+<hr />
+<h2 id="418-bcnf-boyce-codd-normal-form">4.18 — BCNF — Boyce-Codd Normal Form<a class="headerlink" href="#418-bcnf-boyce-codd-normal-form" title="Permanent link">&para;</a></h2>
+<details class="abstract" open="open">
+<summary>BCNF</summary>
+<p>A relation is in <strong>BCNF</strong> if, for every non-trivial FD <span class="arithmatex">\(X \to Y\)</span>:</p>
+<p><strong><span class="arithmatex">\(X\)</span> is a superkey.</strong></p>
+<p>(No exception for prime attributes.)</p>
+</details>
+<div class="fragment">
+
+???+ info "BCNF is stricter than 3NF"
+    3NF allows $Y$ prime even when $X$ is not superkey. BCNF forbids this.
+
+    Example: `R(A,B,C)` with `AB → C, C → B`. Candidate keys: `AB`, `AC`. `C → B` has non-superkey `C` but prime `B` → **3NF but not BCNF**.
+
+</div>
+
+<div class="fragment">
+
+!!! warning "BCNF may lose dependency preservation"
+    The classic 3NF-but-not-BCNF relation above cannot be BCNF-decomposed without losing the FD `AB → C`. So 3NF is the practical target when dependency preservation matters.
+
+</div>
+
+<hr />
+<h2 id="worked-example-45-full-normalisation">Worked example 4.5 — Full normalisation<a class="headerlink" href="#worked-example-45-full-normalisation" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Problem:</p>
+<p><div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>EMP_PROJ(ssn, ename, pno, pname, hours)
+</span></code></pre></div>
+FDs: <code>ssn → ename</code>, <code>pno → pname</code>, <code>(ssn, pno) → hours</code>. Normalise to 3NF.</p>
+</div>
+<div class="fragment">
+
+???+ note "**Step 1 — candidate key.**"
+    Only `(ssn, pno)` is a candidate key. Prime attributes: `ssn`, `pno`. Non-prime: `ename`, `pname`, `hours`.
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 2 — check 1NF.**"
+    All values atomic. **Satisfied.**
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 3 — check 2NF.**"
+    `ssn → ename`: partial dependency (ename on ssn only). `pno → pname`: partial dependency. **Violates 2NF.**
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 4 — decompose for 2NF.**"
+    - `EMP(ssn, ename)`
+    - `PROJ(pno, pname)`
+    - `WORKS_ON(ssn, pno, hours)`
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 5 — check 3NF.**"
+    - `EMP`: `ssn` is the key; `ssn → ename` OK.
+    - `PROJ`: `pno` is the key; `pno → pname` OK.
+    - `WORKS_ON`: `(ssn, pno)` is the key; `(ssn, pno) → hours` OK. No transitive dependencies.
+
+    **All three are in 3NF (and in BCNF).**
+
+</div>
+
+<div class="fragment">
+
+??? success "**Result.**"
+    `EMP(ssn, ename)`, `PROJ(pno, pname)`, `WORKS_ON(ssn, pno, hours)` — lossless, dependency-preserving, in BCNF.
+
+</div>
+
+<hr />
+<h2 id="worked-example-46-3nf-but-not-bcnf">Worked example 4.6 — 3NF but not BCNF<a class="headerlink" href="#worked-example-46-3nf-but-not-bcnf" title="Permanent link">&para;</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Problem:</p>
+<p><code>R(A, B, C)</code> with FDs <code>AB → C, C → B</code>. Is it in 3NF? BCNF?</p>
+</div>
+<div class="fragment">
+
+???+ note "**Step 1 — candidate keys.**"
+    - $(AB)^+ = \{A, B, C\}$ → `AB` is a candidate key.
+    - $(AC)^+ = \{A, C, B\}$ → `AC` is a candidate key.
+
+    Prime attributes: `A, B, C`. Non-prime: none.
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 2 — check 3NF.**"
+    For every FD $X \to Y$: $X$ superkey **or** $Y$ prime.
+    - `AB → C`: `AB` is superkey. ✓
+    - `C → B`: `C` not superkey, but `B` is prime → satisfies 3NF. ✓
+
+</div>
+
+<div class="fragment">
+
+??? info "**Step 3 — check BCNF.**"
+    `C → B`: `C` is not a superkey. **Violates BCNF.**
+
+</div>
+
+<div class="fragment">
+
+??? success "**Conclusion.**"
+    The relation is **3NF but not BCNF**.
+
+</div>
+
+<div class="fragment">
+
+???+ warning "BCNF decomposition loses dependency"
+    Decompose into `R1(C, B)` and `R2(A, C)`. Lossless, BCNF. But `AB → C` now requires a **join** to verify — **dependency not preserved**.
+
+</div>
+
+<hr />
+<h2 id="419-decomposition-properties">4.19 — Decomposition Properties<a class="headerlink" href="#419-decomposition-properties" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Two desirable properties</summary>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Lossless join</strong></td>
+<td>The natural join of the decomposed relations reconstructs the original exactly (no spurious tuples)</td>
+</tr>
+<tr>
+<td><strong>Dependency preservation</strong></td>
+<td>Every FD of the original is enforceable within a single decomposed relation</td>
+</tr>
+</tbody>
+</table>
+</details>
+<div class="fragment">
+
+???+ info "Testing for lossless join (binary decomposition)"
+    For $R$ decomposed into $R_1$ and $R_2$:
+
+    **Lossless iff** $R_1 \cap R_2 \to R_1$ **or** $R_1 \cap R_2 \to R_2$ holds.
+
+</div>
+
+<div class="fragment">
+
+???+ info "The 3NF synthesis algorithm"
+    1. Compute a minimal cover $F_{\min}$.
+    2. For each FD $X \to A$ in $F_{\min}$, create a relation $XA$.
+    3. If no relation contains a candidate key of $R$, add one.
+
+    **Guarantees:** lossless, dependency-preserving, 3NF.
+
+</div>
+
+<div class="fragment">
+
+???+ warning "BCNF decomposition is lossless but not dependency-preserving"
+    The classic 3NF-not-BCNF example shows that BCNF and dependency preservation can conflict. **3NF is the practical target** for OLTP systems.
+
+</div>
+
+<hr />
+<h2 id="420-informal-design-guidelines">4.20 — Informal Design Guidelines<a class="headerlink" href="#420-informal-design-guidelines" title="Permanent link">&para;</a></h2>
+<details class="note" open="open">
+<summary>Three guidelines (Elmasri §14.1)</summary>
+<p><strong>1. Clear semantics.</strong> Each tuple should represent <strong>one entity or relationship</strong>, and each attribute should describe <strong>one property</strong> of that entity.</p>
+</details>
+<div class="fragment">
+
+???+ note "2. No redundant information"
+    Redundancy causes **update, insertion, and deletion anomalies**. The goal of normalization is to eliminate structural redundancy.
+
+</div>
+
+<div class="fragment">
+
+???+ note "3. Few NULLs"
+    Excessive NULLs waste space and complicate joins, aggregates, and constraints. NULLs also indicate **ambiguous design**.
+
+</div>
+
+<div class="fragment">
+
+!!! tip "Normalization is a design guideline, not a law"
+    Sometimes denormalization is **deliberate** — data warehouses denormalize for query performance. But OLTP systems should normalize to 3NF (or BCNF when possible).
+
+</div>
+
+<hr />
+<h2 id="chapter-4-key-takeaways">Chapter 4 — key takeaways<a class="headerlink" href="#chapter-4-key-takeaways" title="Permanent link">&para;</a></h2>
+<div class="fragment">
+
+**1.** The **7-step ER-to-relational mapping** transforms any ER diagram into a relational schema. Order matters.
+
+</div>
+
+<div class="fragment">
+
+**2.** **EER specialisations** have four mapping options (8A–8D); **categories** use a type-discriminator table.
+
+</div>
+
+<div class="fragment">
+
+**3.** **Functional dependencies** $X \to Y$ mean $X$ determines $Y$. **Armstrong's axioms** (reflexivity, augmentation, transitivity) are sound and complete.
+
+</div>
+
+<div class="fragment">
+
+**4.** **Closure** $X^+$ tests whether $X$ is a superkey and whether $X \to Y$ holds. **Minimal cover** reduces FDs to their essential form.
+
+</div>
+
+<div class="fragment">
+
+**5.** **1NF** = atomic values. **2NF** = no partial dependency. **3NF** = no transitive dependency. **BCNF** = every determinant is a superkey.
+
+</div>
+
+<div class="fragment">
+
+**6.** **Lossless join** and **dependency preservation** are the two goals of decomposition. **3NF synthesis** achieves both; **BCNF decomposition** achieves only losslessness.
+
+</div>
+
+<hr />
+<h2 id="next-chapter-5">Next — Chapter 5<a class="headerlink" href="#next-chapter-5" title="Permanent link">&para;</a></h2>
+<p><strong>Relational Algebra and Calculus.</strong></p>
+<div class="fragment">
+
+- **σ, π, ×, ∪, −, ρ** — the six fundamental operations.
+- **Joins**: theta, equi, natural, outer.
+- **Division** — for "for all" queries.
+- **Tuple relational calculus (TRC)** and **domain relational calculus (DRC)**.
+- **Examples** on the COMPANY database.
+
+</div>
+
+<div class="fragment">
+
+Chapter 4 gave a normalized schema. Chapter 5 gives the **query algebra** — the theoretical foundation of SQL.
+
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "navigation.tracking", "content.code.copy", "search.suggest", "search.highlight", "toc.follow"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
